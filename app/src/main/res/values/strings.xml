@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Echo</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dialog_cancel">cancel</string>
+    <string name="dialog_create">create</string>
+    <string name="dialog_join">join</string>
+</resources>
