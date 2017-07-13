@@ -1,8 +1,7 @@
-package com.stream.jerye.queue;
+package com.stream.jerye.queue.room;
 
 import android.app.Activity;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -13,8 +12,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,13 +26,15 @@ import android.widget.TextView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.squareup.picasso.Picasso;
-import com.stream.jerye.queue.messagePage.MessageFragment;
-import com.stream.jerye.queue.musicPage.MusicFragment;
-import com.stream.jerye.queue.musicPage.SimpleTrack;
+import com.stream.jerye.queue.R;
+import com.stream.jerye.queue.Utility;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
 import com.stream.jerye.queue.lobby.LobbyActivity;
 import com.stream.jerye.queue.lobby.User;
 import com.stream.jerye.queue.profile.SpotifyProfileAsyncTask;
+import com.stream.jerye.queue.room.messagePage.MessageFragment;
+import com.stream.jerye.queue.room.musicPage.MusicFragment;
+import com.stream.jerye.queue.room.musicPage.SimpleTrack;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,9 +47,8 @@ public class RoomActivity extends AppCompatActivity implements
     private QueuePlayer mPlayer;
     private String TAG = "MainActivity.java";
     private static SharedPreferences prefs;
-    private String mToken;
-    private AnimatedVectorDrawable playToPause;
-    private AnimatedVectorDrawable pauseToPlay;
+    private String mToken, mRoomTitle, intentAction;
+    private AnimatedVectorDrawable playToPause, pauseToPlay;
     private FirebaseEventBus.MusicDatabaseAccess mMusicDatabaseAccess;
     private FirebaseEventBus.UserDatabaseAccess mUserDatabaseAccess;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -66,6 +69,12 @@ public class RoomActivity extends AppCompatActivity implements
         }
     };
 
+    @BindView(R.id.room_toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.room_toolbar_profile)
+    ImageView mToolbarProfile;
+    @BindView(R.id.room_toolbar_title)
+    TextView mToolbarTitle;
     @BindView(R.id.view_pager)
     ViewPager mPager;
     @BindView(R.id.play_button)
@@ -80,6 +89,8 @@ public class RoomActivity extends AppCompatActivity implements
     TextView mMusicDuration;
     @BindView(R.id.music_progress)
     TextView mMusicProgress;
+    @BindView(R.id.profile_drawer)
+    DrawerLayout mDrawer;
     @BindView(R.id.profile_name)
     TextView mProfileName;
     @BindView(R.id.profile_picture)
@@ -92,8 +103,14 @@ public class RoomActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.room_activity);
         ButterKnife.bind(this);
-        prefs = getSharedPreferences(getPackageName(), Context.MODE_PRIVATE);
-        mToken = prefs.getString("token", "");
+
+        mToken = Utility.getPreference(this, Utility.SPOTIFY_TOKEN);
+
+        Intent intent = getIntent();
+        intentAction = intent.getAction();
+        Bundle bundle = intent.getExtras();
+        mRoomTitle = bundle.getString("room title");
+        setupToolBar();
 
         mMusicDatabaseAccess = new FirebaseEventBus.MusicDatabaseAccess(this, this);
         mUserDatabaseAccess = new FirebaseEventBus.UserDatabaseAccess(this);
@@ -106,7 +123,6 @@ public class RoomActivity extends AppCompatActivity implements
         SpotifyProfileAsyncTask asyncTask = new SpotifyProfileAsyncTask(this, this, mToken);
         asyncTask.execute();
 
-        Bundle bundle = getIntent().getExtras();
         try {
             getActionBar().setTitle(bundle.getString("room title"));
         } catch (NullPointerException nullPointerException) {
@@ -203,11 +219,12 @@ public class RoomActivity extends AppCompatActivity implements
         mProfileName.setText(profileName);
         Picasso.with(this).load(profilePicture).into(mProfilePicture);
 
-        User newUser = new User(profileName, profileId, FirebaseInstanceId.getInstance().getToken());
-
         // Check if user is unique first
+        if (LobbyActivity.ACTION_NEW_USER.equals(intentAction)) {
+            User newUser = new User(profileName, profileId, FirebaseInstanceId.getInstance().getToken());
+            mUserDatabaseAccess.push(newUser);
+        }
 
-        mUserDatabaseAccess.push(newUser);
 
     }
 
@@ -298,5 +315,14 @@ public class RoomActivity extends AppCompatActivity implements
         startActivity(exit);
     }
 
+    public void setupToolBar() {
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle(null);
+        mToolbarTitle.setText(mRoomTitle);
+    }
+
+    public void openProfileDrawer(View v) {
+        mDrawer.openDrawer(Gravity.LEFT);
+    }
 
 }

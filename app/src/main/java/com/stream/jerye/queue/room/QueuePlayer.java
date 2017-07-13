@@ -1,6 +1,6 @@
-package com.stream.jerye.queue;
+package com.stream.jerye.queue.room;
 
-import com.stream.jerye.queue.musicPage.SimpleTrack;
+import com.stream.jerye.queue.room.musicPage.SimpleTrack;
 
 public interface QueuePlayer {
 

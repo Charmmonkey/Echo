@@ -1,18 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/profile_drawer"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:weightSum="1"
-        tools:context="com.stream.jerye.queue.RoomActivity">
+        tools:context="com.stream.jerye.queue.room.RoomActivity">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/room_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="?colorPrimary"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/room_toolbar_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/dehaze_icon"
+                    android:padding="16dp"
+                    android:onClick="openProfileDrawer"/>
+
+                <TextView
+                    android:id="@+id/room_toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Test Room Title"
+                    android:textColor="@color/white"
+                    android:textAllCaps="true"
+                    android:gravity="center_vertical"
+                    android:paddingEnd="16dp"
+                    />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
@@ -21,19 +59,19 @@
             android:layout_weight="1" />
 
         <TextView
-            android:padding="8dp"
             android:id="@+id/music_current"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             tools:text="current song" />
 
         <LinearLayout
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:background="@color/gray_accent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/gray_accent"
             android:orientation="horizontal"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
             android:weightSum="1">
 
             <TextView
@@ -45,8 +83,8 @@
             <SeekBar
                 android:id="@+id/music_seekbar"
                 android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/music_duration"
@@ -81,6 +119,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/profile_linear"
         android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
@@ -88,21 +127,21 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/profile_picture"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/profile_picture" />
+            android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/profile_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/profile_name"/>
+            android:layout_height="wrap_content" />
 
         <Button
+            android:id="@+id/profile_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/profile_logout"
-            android:text="Sign out"
-            android:onClick="profileLogout"/>
+            android:onClick="profileLogout"
+            android:text="Sign out" />
 
 
     </LinearLayout>

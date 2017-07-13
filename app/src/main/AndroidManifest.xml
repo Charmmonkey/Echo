@@ -19,14 +19,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RoomActivity"
+            android:name=".room.RoomActivity"
             android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name="com.spotify.sdk.android.authentication.LoginActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <service android:name=".PlayerService" />
+        <service android:name=".room.PlayerService" />
 
 
 

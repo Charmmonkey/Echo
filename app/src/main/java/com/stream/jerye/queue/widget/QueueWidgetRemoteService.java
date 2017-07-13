@@ -7,7 +7,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.squareup.picasso.Picasso;
-import com.stream.jerye.queue.musicPage.SimpleTrack;
+import com.stream.jerye.queue.room.musicPage.SimpleTrack;
 import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
 

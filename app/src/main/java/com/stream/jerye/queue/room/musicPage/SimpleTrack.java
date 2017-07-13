@@ -1,4 +1,4 @@
-package com.stream.jerye.queue.musicPage;
+package com.stream.jerye.queue.room.musicPage;
 
 import kaaes.spotify.webapi.android.models.ArtistSimple;
 import kaaes.spotify.webapi.android.models.Track;

@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stream.jerye.queue.R;
-import com.stream.jerye.queue.RoomActivity;
+import com.stream.jerye.queue.room.RoomActivity;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
 
 import java.util.ArrayList;
@@ -111,6 +111,7 @@ public class JoinRoomDialog extends DialogFragment implements FirebaseEventBus.F
                             Log.d("Dialog", "room key: " + room.getRoomKey());
 
                             Intent intent = new Intent(getActivity(), RoomActivity.class)
+                                    .setAction(LobbyActivity.ACTION_NEW_USER)
                                     .putExtra("room title", mTitleAttempt)
                                     .putExtra("room password", mPasswordAttempt);
                             startActivity(intent);

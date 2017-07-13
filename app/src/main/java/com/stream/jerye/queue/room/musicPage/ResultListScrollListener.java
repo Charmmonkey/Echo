@@ -1,4 +1,4 @@
-package com.stream.jerye.queue.musicPage;
+package com.stream.jerye.queue.room.musicPage;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

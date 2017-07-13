@@ -10,8 +10,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.stream.jerye.queue.messagePage.Message;
-import com.stream.jerye.queue.musicPage.SimpleTrack;
+import com.stream.jerye.queue.room.messagePage.Message;
+import com.stream.jerye.queue.room.musicPage.SimpleTrack;
 import com.stream.jerye.queue.lobby.Room;
 import com.stream.jerye.queue.lobby.User;
 

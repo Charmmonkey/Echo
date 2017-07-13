@@ -10,7 +10,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.stream.jerye.queue.R;
-import com.stream.jerye.queue.RoomActivity;
+import com.stream.jerye.queue.room.RoomActivity;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
 
 /**

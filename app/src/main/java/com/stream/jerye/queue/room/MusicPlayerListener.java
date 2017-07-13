@@ -1,4 +1,4 @@
-package com.stream.jerye.queue;
+package com.stream.jerye.queue.room;
 
 /**
  * Created by jerye on 6/16/2017.

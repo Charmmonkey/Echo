@@ -15,7 +15,7 @@ import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.stream.jerye.queue.BuildConfig;
 import com.stream.jerye.queue.R;
-import com.stream.jerye.queue.RoomActivity;
+import com.stream.jerye.queue.room.RoomActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +24,9 @@ public class LobbyActivity extends AppCompatActivity {
     private String mToken;
     public static final String CLIENT_ID = BuildConfig.SPOTIFY_CLIENT_ID;
     private static final String REDIRECT_URI = "https://en.wikipedia.org/wiki/Whitelist";
+    public static final String ACTION_EXISTING_USER = "com.stream.jerye.queue.ACTION_EXISTING_USER";
+    public static final String ACTION_NEW_USER = "com.stream.jerye.queue.ACTION_NEW_USER";
+
     private static final int REQUEST_CODE = 42;
     private SharedPreferences prefs;
     private String roomKey;
@@ -85,7 +88,8 @@ public class LobbyActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         if (!roomKey.equals("")) {
-                            Intent intent = new Intent(LobbyActivity.this, RoomActivity.class);
+                            Intent intent = new Intent(LobbyActivity.this, RoomActivity.class)
+                                    .setAction(ACTION_EXISTING_USER);
                             startActivity(intent);
                         }else{
                             new JoinRoomDialog().show(getFragmentManager(), "JoinRoomDialog");

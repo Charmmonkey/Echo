@@ -1,11 +1,11 @@
-package com.stream.jerye.queue.musicPage;
+package com.stream.jerye.queue.room.musicPage;
 
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.stream.jerye.queue.PlayerService;
+import com.stream.jerye.queue.room.PlayerService;
 
 import java.util.List;
 

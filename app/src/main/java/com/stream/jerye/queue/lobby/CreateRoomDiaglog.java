@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stream.jerye.queue.R;
-import com.stream.jerye.queue.RoomActivity;
+import com.stream.jerye.queue.room.RoomActivity;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
 
 import butterknife.BindView;
@@ -91,6 +91,7 @@ public class CreateRoomDiaglog extends DialogFragment {
                         roomDatabaseAccess.push(mRoomTitle, mRoomPassword);
 
                         Intent intent = new Intent(getActivity(), RoomActivity.class)
+                                .setAction(LobbyActivity.ACTION_NEW_USER)
                                 .putExtra("title", mRoomTitle)
                                 .putExtra("password", mRoomPassword);
                         startActivity(intent);

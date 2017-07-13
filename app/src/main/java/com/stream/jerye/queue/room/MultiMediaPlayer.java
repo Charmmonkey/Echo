@@ -1,4 +1,4 @@
-package com.stream.jerye.queue;
+package com.stream.jerye.queue.room;
 
 import android.content.Context;
 import android.content.UriMatcher;
@@ -14,7 +14,7 @@ import com.spotify.sdk.android.player.PlayerNotificationCallback;
 import com.spotify.sdk.android.player.PlayerState;
 import com.spotify.sdk.android.player.PlayerStateCallback;
 import com.spotify.sdk.android.player.Spotify;
-import com.stream.jerye.queue.musicPage.SimpleTrack;
+import com.stream.jerye.queue.room.musicPage.SimpleTrack;
 import com.stream.jerye.queue.lobby.LobbyActivity;
 
 import java.util.ArrayList;

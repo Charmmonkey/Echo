@@ -1,4 +1,4 @@
-package com.stream.jerye.queue.messagePage;
+package com.stream.jerye.queue.room.messagePage;
 
 
 import android.content.Context;
