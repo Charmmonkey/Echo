@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stream.jerye.queue.R;
+import com.stream.jerye.queue.PreferenceUtility;
 import com.stream.jerye.queue.room.RoomActivity;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
 
@@ -41,6 +42,7 @@ public class CreateRoomDiaglog extends DialogFragment {
 
         final View dialogView = getActivity().getLayoutInflater().inflate(R.layout.create_room_dialog, null);
         ButterKnife.bind(this, dialogView);
+        PreferenceUtility.initialize(getActivity());
 
         roomTitleEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -90,10 +92,13 @@ public class CreateRoomDiaglog extends DialogFragment {
                         FirebaseEventBus.RoomDatabaseAccess roomDatabaseAccess = new FirebaseEventBus.RoomDatabaseAccess(getActivity());
                         roomDatabaseAccess.push(mRoomTitle, mRoomPassword);
 
+                        PreferenceUtility.setPreference(PreferenceUtility.ROOM_TITLE, mRoomTitle);
+                        PreferenceUtility.setPreference(PreferenceUtility.ROOM_PASSWORD, mRoomPassword);
+
                         Intent intent = new Intent(getActivity(), RoomActivity.class)
                                 .setAction(LobbyActivity.ACTION_NEW_USER)
-                                .putExtra("title", mRoomTitle)
-                                .putExtra("password", mRoomPassword);
+                                .putExtra("room title", mRoomTitle)
+                                .putExtra("room password", mRoomPassword);
                         startActivity(intent);
 
                         alertDialog.dismiss();

@@ -27,7 +27,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.squareup.picasso.Picasso;
 import com.stream.jerye.queue.R;
-import com.stream.jerye.queue.Utility;
+import com.stream.jerye.queue.PreferenceUtility;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
 import com.stream.jerye.queue.lobby.LobbyActivity;
 import com.stream.jerye.queue.lobby.User;
@@ -104,13 +104,12 @@ public class RoomActivity extends AppCompatActivity implements
         setContentView(R.layout.room_activity);
         ButterKnife.bind(this);
 
-        mToken = Utility.getPreference(this, Utility.SPOTIFY_TOKEN);
+        PreferenceUtility.initialize(this);
+        mToken = PreferenceUtility.getPreference(PreferenceUtility.SPOTIFY_TOKEN);
 
         Intent intent = getIntent();
         intentAction = intent.getAction();
-        Bundle bundle = intent.getExtras();
-        mRoomTitle = bundle.getString("room title");
-        setupToolBar();
+
 
         mMusicDatabaseAccess = new FirebaseEventBus.MusicDatabaseAccess(this, this);
         mUserDatabaseAccess = new FirebaseEventBus.UserDatabaseAccess(this);
@@ -123,11 +122,14 @@ public class RoomActivity extends AppCompatActivity implements
         SpotifyProfileAsyncTask asyncTask = new SpotifyProfileAsyncTask(this, this, mToken);
         asyncTask.execute();
 
-        try {
-            getActionBar().setTitle(bundle.getString("room title"));
-        } catch (NullPointerException nullPointerException) {
-            nullPointerException.printStackTrace();
+        if (LobbyActivity.ACTION_NEW_USER.equals(intentAction)) {
+            Bundle bundle = intent.getExtras();
+            mRoomTitle = bundle.getString("room title");
+        } else if (LobbyActivity.ACTION_EXISTING_USER.equals(intentAction)) {
+            mRoomTitle = PreferenceUtility.getPreference(PreferenceUtility.ROOM_TITLE);
         }
+
+        mToolbarTitle.setText(mRoomTitle);
 
     }
 
@@ -210,11 +212,10 @@ public class RoomActivity extends AppCompatActivity implements
         String profileName = userPrivate.display_name;
         String profilePicture = userPrivate.images.get(0).url;
         String profileId = userPrivate.id;
-        prefs.edit()
-                .putString("profile name", profileName)
-                .putString("profile picture url", profilePicture)
-                .putString("profile id", profileId)
-                .apply();
+
+        String[] profile = {profileName,profilePicture,profileId};
+
+        PreferenceUtility.setPreference(PreferenceUtility.PROFILE_GENERIC,profile);
 
         mProfileName.setText(profileName);
         Picasso.with(this).load(profilePicture).into(mProfilePicture);
@@ -315,11 +316,6 @@ public class RoomActivity extends AppCompatActivity implements
         startActivity(exit);
     }
 
-    public void setupToolBar() {
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(null);
-        mToolbarTitle.setText(mRoomTitle);
-    }
 
     public void openProfileDrawer(View v) {
         mDrawer.openDrawer(Gravity.LEFT);

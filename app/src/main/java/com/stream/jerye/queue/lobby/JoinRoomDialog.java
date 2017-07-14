@@ -3,10 +3,8 @@ package com.stream.jerye.queue.lobby;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -17,8 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stream.jerye.queue.R;
-import com.stream.jerye.queue.room.RoomActivity;
+import com.stream.jerye.queue.PreferenceUtility;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
+import com.stream.jerye.queue.room.RoomActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +50,7 @@ public class JoinRoomDialog extends DialogFragment implements FirebaseEventBus.F
 
         final View dialogView = getActivity().getLayoutInflater().inflate(R.layout.join_room_dialog, null);
         ButterKnife.bind(this, dialogView);
+        PreferenceUtility.initialize(getActivity());
 
         FirebaseEventBus.RoomDatabaseAccess mRoomAccessDatabase = new FirebaseEventBus.RoomDatabaseAccess(getActivity(), this);
         mRoomAccessDatabase.getRooms();
@@ -106,8 +106,7 @@ public class JoinRoomDialog extends DialogFragment implements FirebaseEventBus.F
                         Log.d("Dialog", "title: " + room.getTitle() + "password: " + room.getPassword() + "|||");
 
                         if (mTitleAttempt.equals(room.getTitle()) && (mPasswordAttempt.equals(room.getPassword()) || room.getPassword() == null)) {
-                            SharedPreferences prefs = getActivity().getSharedPreferences(getActivity().getPackageName(), Context.MODE_PRIVATE);
-                            prefs.edit().putString("room key", room.getRoomKey()).apply();
+                            PreferenceUtility.setPreference(PreferenceUtility.ROOM_KEY,room.getRoomKey());
                             Log.d("Dialog", "room key: " + room.getRoomKey());
 
                             Intent intent = new Intent(getActivity(), RoomActivity.class)
