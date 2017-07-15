@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class MultiMediaPlayer implements QueuePlayer,
+public class MultiMediaPlayer implements EchoPlayer,
         MediaPlayer.OnCompletionListener,
         ConnectionStateCallback,
         PlayerStateCallback,
@@ -108,6 +108,11 @@ public class MultiMediaPlayer implements QueuePlayer,
     @Override
     public void seekTo(int newPosition) {
         mSpotifyPlayer.seekToPosition(newPosition);
+    }
+
+    @Override
+    public void previous() {
+        previousSong();
     }
 
     @Override
@@ -247,17 +252,27 @@ public class MultiMediaPlayer implements QueuePlayer,
 
     private void playTrack(SimpleTrack track) {
         mSpotifyPlayer.play(track.getTrack());
+        mMusicPlayerListener.displayCurrentTrack(track);
         mMusicPlayerListener.getSongDuration((int) track.getDurationInMS());
         Log.d(TAG, "duration: " + track.getDurationInMS());
+
     }
 
     private void nextSong() {
-        if(num < mList.size() -1 && num != -1){
+        Log.d("Player", "current num: " + num);
+        if( mList.size()-1 > 0 && num < mList.size() -1 && num >= 0){
             num = num + 1;
             playTrack(mList.get(num));
         }
-
     }
+
+    private void previousSong(){
+        if(mList.size()-1 > 0 && num > 0){
+            num = num - 1;
+            playTrack(mList.get(num));
+        }
+    }
+
 
 
 }

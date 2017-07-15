@@ -10,16 +10,16 @@ import android.support.annotation.Nullable;
 public class PlayerService extends Service {
 
     private final IBinder mBinder = new PlayerBinder();
-    private QueuePlayer mQueuePlayer;
+    private EchoPlayer mEchoPlayer;
 
     public static Intent getIntent(Context context) {
         return new Intent(context, PlayerService.class);
     }
 
     public class PlayerBinder extends Binder {
-        public QueuePlayer getService(Context context, MusicPlayerListener musicPlayerListener, String spotifyAccessToken) {
-            mQueuePlayer = new MultiMediaPlayer(context, musicPlayerListener, spotifyAccessToken);
-            return mQueuePlayer;
+        public EchoPlayer getService(Context context, MusicPlayerListener musicPlayerListener, String spotifyAccessToken) {
+            mEchoPlayer = new MultiMediaPlayer(context, musicPlayerListener, spotifyAccessToken);
+            return mEchoPlayer;
         }
     }
 
@@ -31,7 +31,7 @@ public class PlayerService extends Service {
 
     @Override
     public void onDestroy() {
-        mQueuePlayer.release();
+        mEchoPlayer.release();
         super.onDestroy();
     }
 }

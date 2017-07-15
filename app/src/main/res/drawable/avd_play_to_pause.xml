@@ -7,8 +7,8 @@
         android:name="@string/play"
         android:animation="@animator/play_to_pause" />
 
-    <target
-        android:name="@string/groupPlayPause"
-        android:animation="@animator/rotate_play_to_pause" />
+    <!--<target-->
+        <!--android:name="@string/groupPlayPause"-->
+        <!--android:animation="@animator/rotate_play_to_pause" />-->
 
 </animated-vector>

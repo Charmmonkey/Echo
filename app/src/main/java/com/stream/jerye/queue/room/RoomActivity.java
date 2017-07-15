@@ -26,8 +26,8 @@ import android.widget.TextView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.squareup.picasso.Picasso;
-import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.PreferenceUtility;
+import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
 import com.stream.jerye.queue.lobby.LobbyActivity;
 import com.stream.jerye.queue.lobby.User;
@@ -44,7 +44,7 @@ public class RoomActivity extends AppCompatActivity implements
         MusicPlayerListener,
         FirebaseEventBus.FirebaseQueueAdapterHandler,
         SpotifyProfileAsyncTask.SpotifyProfileCallback {
-    private QueuePlayer mPlayer;
+    private EchoPlayer mPlayer;
     private String TAG = "MainActivity.java";
     private static SharedPreferences prefs;
     private String mToken, mRoomTitle, intentAction;
@@ -77,14 +77,20 @@ public class RoomActivity extends AppCompatActivity implements
     TextView mToolbarTitle;
     @BindView(R.id.view_pager)
     ViewPager mPager;
+    @BindView(R.id.previous_button)
+    ImageView mPreviousButton;
     @BindView(R.id.play_button)
     ImageView mPlayButton;
     @BindView(R.id.next_button)
     ImageView mNextButton;
     @BindView(R.id.music_seekbar)
     SeekBar mSeekBar;
-    @BindView(R.id.music_current)
-    TextView mCurrentMusicView;
+    @BindView(R.id.music_current_title)
+    TextView mCurrentMusicTitle;
+    @BindView(R.id.music_current_artist)
+    TextView mCurrentMusicArtist;
+    @BindView(R.id.current_album_image)
+    ImageView mCurrentAlbumImage;
     @BindView(R.id.music_duration)
     TextView mMusicDuration;
     @BindView(R.id.music_progress)
@@ -172,18 +178,7 @@ public class RoomActivity extends AppCompatActivity implements
             }
         });
 
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("MainActivity.java", "Next button clicked");
 
-                if (mPlayer == null) {
-                    Log.d("MainActivity.java", "mPlayer is null");
-                    return;
-                }
-                mPlayer.next();
-            }
-        });
 
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -222,7 +217,7 @@ public class RoomActivity extends AppCompatActivity implements
 
         // Check if user is unique first
         if (LobbyActivity.ACTION_NEW_USER.equals(intentAction)) {
-            User newUser = new User(profileName, profileId, FirebaseInstanceId.getInstance().getToken());
+            User newUser = new User(profileName, profileId, FirebaseInstanceId.getInstance().getToken(),profilePicture);
             mUserDatabaseAccess.push(newUser);
         }
 
@@ -283,7 +278,14 @@ public class RoomActivity extends AppCompatActivity implements
         mMusicDuration.setText(minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
     }
 
-//    @Override
+    @Override
+    public void displayCurrentTrack(SimpleTrack simpleTrack) {
+        mCurrentMusicTitle.setText(simpleTrack.getName());
+        mCurrentMusicArtist.setText(simpleTrack.getArtistName());
+        Picasso.with(this).load(simpleTrack.getAlbumImage()).into(mCurrentAlbumImage);
+    }
+
+    //    @Override
 //    public void queueNextSong(SimpleTrack oldTrackToRemove) {
 //        Log.d(TAG, "queueNextSong called from player context end");
 //        mMusicDatabaseAccess.remove(oldTrackToRemove);
@@ -318,7 +320,23 @@ public class RoomActivity extends AppCompatActivity implements
 
 
     public void openProfileDrawer(View v) {
-        mDrawer.openDrawer(Gravity.LEFT);
+        mDrawer.openDrawer(Gravity.START);
+    }
+
+    public void playNext(View v){
+        if (mPlayer == null) {
+            Log.d("MainActivity.java", "mPlayer is null");
+            return;
+        }
+        mPlayer.next();
+    }
+
+    public void playPrevious(View v){
+        if (mPlayer == null) {
+            Log.d("MainActivity.java", "mPlayer is null");
+            return;
+        }
+        mPlayer.previous();
     }
 
 }

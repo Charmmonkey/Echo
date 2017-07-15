@@ -2,7 +2,7 @@ package com.stream.jerye.queue.room;
 
 import com.stream.jerye.queue.room.musicPage.SimpleTrack;
 
-public interface QueuePlayer {
+public interface EchoPlayer {
 
     void play();
 
@@ -11,6 +11,8 @@ public interface QueuePlayer {
     void resume();
 
     void seekTo(int newPosition);
+
+    void previous();
 
     void next();
 

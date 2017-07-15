@@ -1,8 +1,6 @@
 package com.stream.jerye.queue.room.messagePage;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.stream.jerye.queue.PreferenceUtility;
 import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
 
@@ -62,8 +61,8 @@ public class MessageFragment extends Fragment implements FirebaseEventBus.Fireba
         mRecyclerView.setLayoutManager(linearLayoutManager);
         messageList = new ArrayList<>();
 
-        SharedPreferences prefs = getContext().getSharedPreferences(getContext().getPackageName(), Context.MODE_PRIVATE);
-        mUsername = prefs.getString("profile name", "unknown");
+        PreferenceUtility.initialize(getContext());
+        mUsername = PreferenceUtility.getPreference(PreferenceUtility.PROFILE_NAME);
         mMessageAdapter = new MessageAdapter(getContext(), messageList);
         mRecyclerView.setAdapter(mMessageAdapter);
 

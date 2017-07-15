@@ -65,6 +65,8 @@ public class PreferenceUtility {
                 return prefs.getString(ROOM_TITLE, "");
             case ROOM_PASSWORD:
                 return prefs.getString(ROOM_PASSWORD, "");
+            case PROFILE_NAME:
+                return prefs.getString(PROFILE_NAME,"");
             default:
                 return "";
         }
