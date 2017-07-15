@@ -67,7 +67,6 @@ public class MessageFragment extends Fragment implements FirebaseEventBus.Fireba
         mRecyclerView.setAdapter(mMessageAdapter);
 
 
-
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -88,8 +87,10 @@ public class MessageFragment extends Fragment implements FirebaseEventBus.Fireba
         mMessageSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMessageDatabaseAccess.push(mEditText.getText().toString(), mUsername);
-                mEditText.setText("");
+                if (!mEditText.getText().toString().equals("")) {
+                    mMessageDatabaseAccess.push(mEditText.getText().toString(), mUsername);
+                    mEditText.setText("");
+                }
             }
         });
 
@@ -100,7 +101,7 @@ public class MessageFragment extends Fragment implements FirebaseEventBus.Fireba
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mMessageDatabaseAccess = new FirebaseEventBus.MessageDatabaseAccess(getContext(),this);
+        mMessageDatabaseAccess = new FirebaseEventBus.MessageDatabaseAccess(getContext(), this);
         mMessageDatabaseAccess.addChildListener();
     }
 

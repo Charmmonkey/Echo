@@ -25,7 +25,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     private Context mContext;
     private List<Message> mMessageList;
     private SharedPreferences mPrefs;
-    private LinearLayout.LayoutParams params;
+    private LinearLayout.LayoutParams params, paramsSystems;
 
     public MessageAdapter(Context context, List<Message> list) {
         mContext = context;
@@ -33,6 +33,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         mPrefs = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE);
         params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.END;
+        paramsSystems = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        paramsSystems.gravity = Gravity.CENTER;
     }
 
     @Override
@@ -53,7 +55,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             holder.messageContent.setBackground(ContextCompat.getDrawable(mContext, R.drawable.message_bubble_me));
         }else if(name.equals("SYSTEM ANNOUNCEMENT") ){
             holder.messageName.setVisibility(View.GONE);
-            holder.messageContent.setBackgroundColor(ContextCompat.getColor(mContext,R.color.white_translucent));
+            holder.messageContent.setLayoutParams(paramsSystems);
+            holder.messageContent.setBackgroundColor(ContextCompat.getColor(mContext,R.color.transparent));
         }
     }
 

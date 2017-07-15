@@ -6,4 +6,8 @@
     <string name="dialog_cancel">cancel</string>
     <string name="dialog_create">create</string>
     <string name="dialog_join">join</string>
+
+    <string name="skip_previous">skip to previous track</string>
+    <string name="skip_next">skip to next track</string>
+    <string name="current_album_image">current album image</string>
 </resources>

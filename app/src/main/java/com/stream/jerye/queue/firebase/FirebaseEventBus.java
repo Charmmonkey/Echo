@@ -43,6 +43,10 @@ public class FirebaseEventBus {
         void getRooms(Room room);
     }
 
+    public interface FirebaseUserAdapterHandler {
+        void getUser(User room);
+    }
+
 
     public static class MusicDatabaseAccess {
         private FirebasePeekHandler mFirebasePeekHandler;
@@ -345,6 +349,35 @@ public class FirebaseEventBus {
             mUserDatabaseReference.push().setValue(user);
         }
 
+        public void getUsers(){
+            mUserDatabaseReference.orderByKey().addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    User user = dataSnapshot.getValue(User.class);
+
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
 }

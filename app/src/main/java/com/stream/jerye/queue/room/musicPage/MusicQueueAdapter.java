@@ -25,12 +25,18 @@ public class MusicQueueAdapter extends RecyclerView.Adapter<MusicQueueAdapter.Mu
     private String singleTitle, singleArtist, singleAlbumImage;
     private int noAlbumImageId = R.drawable.ic_pause;
     private String TAG = "MusicQueueAdapter";
+    private MusicPlaylistClickHandler mMusicPlaylistHandler;
 
-    public MusicQueueAdapter(Context context) {
+    public MusicQueueAdapter(Context context, MusicPlaylistClickHandler musicPlaylistHandler) {
+        mMusicPlaylistHandler = musicPlaylistHandler;
         mContext = context;
     }
 
-    public class MusicQueueViewHolder extends RecyclerView.ViewHolder {
+    public interface MusicPlaylistClickHandler{
+        void onClick();
+    }
+
+    public class MusicQueueViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView title;
         private TextView artist;
         private ImageView albumImage;
@@ -41,6 +47,11 @@ public class MusicQueueAdapter extends RecyclerView.Adapter<MusicQueueAdapter.Mu
             title = (TextView) itemView.findViewById(R.id.queued_music_name);
             artist = (TextView) itemView.findViewById(R.id.queued_music_artists);
             albumImage = (ImageView) itemView.findViewById(R.id.queued_music_album_image);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mMusicPlaylistHandler.onClick();
         }
     }
 
@@ -81,10 +92,6 @@ public class MusicQueueAdapter extends RecyclerView.Adapter<MusicQueueAdapter.Mu
         notifyDataSetChanged();
     }
 
-    public void dequeue() {
-        mItems.remove(0);
-        notifyItemRemoved(0);
-    }
 
     public void remove(int position) {
         mItems.remove(position);

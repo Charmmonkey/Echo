@@ -13,7 +13,7 @@
         <path
             android:name="@string/pause"
             android:pathData="@string/path_pause"
-            android:fillColor="@color/stroke_color"/>
+            android:fillColor="@color/white"/>
 
     </group>
 

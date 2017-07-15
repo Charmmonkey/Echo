@@ -7,6 +7,7 @@
     <color name="background_light">#B0BEC5</color>
     <color name="gray_accent">#E0E0E0</color>
     <color name="background_color">#80B3E5FC</color>
+    <color name="transparent">#00FFFFFF</color>
     <color name="white_translucent">#CCFAFAFA</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

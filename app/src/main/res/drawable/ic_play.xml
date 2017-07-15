@@ -13,7 +13,7 @@
         <path
             android:name="@string/play"
             android:pathData="@string/path_play"
-            android:fillColor="@color/stroke_color"/>
+            android:fillColor="@color/white"/>
 
     </group>
 
