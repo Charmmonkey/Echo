@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
@@ -27,7 +29,9 @@ import kaaes.spotify.webapi.android.models.Track;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MusicFragment extends Fragment implements Search.View, FirebaseEventBus.FirebaseQueueAdapterHandler {
+public class MusicFragment extends Fragment implements Search.View,
+        FirebaseEventBus.FirebaseQueueAdapterHandler,
+        MusicQueueAdapter.MusicPlaylistClickHandler {
     private LinearLayoutManager mResultsLayoutManager = new LinearLayoutManager(getContext()), mQueueLayoutManager = new LinearLayoutManager(getContext());
     private ScrollListener mScrollListener = new ScrollListener(mResultsLayoutManager);
     private SearchResultsAdapter mSearchResultsAdapter;
@@ -40,8 +44,10 @@ public class MusicFragment extends Fragment implements Search.View, FirebaseEven
     private FirebaseEventBus.MusicDatabaseAccess mMusicDatabaseAccess;
     private Handler mainHandler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
+    private boolean isTyping = false;
 
-
+    @BindView(R.id.search_container)
+    LinearLayout mSearchContainer;
     @BindView(R.id.search_view)
     SearchView mSearchView;
     @BindView(R.id.search_results)
@@ -60,7 +66,6 @@ public class MusicFragment extends Fragment implements Search.View, FirebaseEven
         return fragment;
     }
 
-
     private class ScrollListener extends ResultListScrollListener {
 
         public ScrollListener(LinearLayoutManager layoutManager) {
@@ -69,10 +74,15 @@ public class MusicFragment extends Fragment implements Search.View, FirebaseEven
 
         @Override
         public void onLoadMore() {
+            Log.d(TAG, "onscroll");
             mActionListener.loadMoreResults();
         }
     }
 
+    @Override
+    public void onClick() {
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,9 +94,25 @@ public class MusicFragment extends Fragment implements Search.View, FirebaseEven
         mSearchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "search view clicked");
                 mSearchView.setIconified(false);
+                isTyping = true;
+                getActivity().getActionBar().hide();
             }
         });
+
+        mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                mSearchContainer.setBackground(ContextCompat.getDrawable(getContext(), R.color.transparent));
+                mMusicResultsList.setVisibility(View.GONE);
+                mSearchResultsAdapter.clearData();
+                mSearchView.clearFocus();
+                getActivity().getActionBar().show();
+                return true;
+            }
+        });
+
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -95,8 +121,13 @@ public class MusicFragment extends Fragment implements Search.View, FirebaseEven
 
             @Override
             public boolean onQueryTextChange(final String newText) {
-                if(!newText.equals("")){
+                if(isTyping){
                     mMusicResultsList.setVisibility(View.VISIBLE);
+                    isTyping = false;
+                }
+
+                if (!newText.equals("")) {
+                    mSearchContainer.setBackground(ContextCompat.getDrawable(getContext(), R.color.colorPrimaryDark));
 
                     mainHandler.removeCallbacks(runnable);
                     runnable = new Runnable() {
@@ -106,22 +137,10 @@ public class MusicFragment extends Fragment implements Search.View, FirebaseEven
                             mActionListener.search(newText);
                         }
                     };
-                    mainHandler.postDelayed(runnable,150);
+                    mainHandler.postDelayed(runnable, 150);
                 }
 
                 return true;
-            }
-        });
-        mSearchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    mMusicResultsList.setVisibility(View.GONE);
-                    mMusicQueueList.setVisibility(View.VISIBLE);
-                }else{
-                    mMusicResultsList.setVisibility(View.VISIBLE);
-                    mMusicQueueList.setVisibility(View.GONE);
-                }
             }
         });
 
@@ -133,8 +152,11 @@ public class MusicFragment extends Fragment implements Search.View, FirebaseEven
                 SimpleTrack simpleTrack = new SimpleTrack(item);
                 mMusicResultsList.setVisibility(View.GONE);
                 mMusicDatabaseAccess.push(simpleTrack);
-                mSearchView.setQuery("",false);
+                mSearchView.setQuery("", false);
+                mSearchContainer.setBackground(ContextCompat.getDrawable(getContext(),R.color.transparent));
                 mSearchResultsAdapter.clearData();
+                isTyping = true;
+                getActivity().getActionBar().show();
             }
         });
 
@@ -145,7 +167,7 @@ public class MusicFragment extends Fragment implements Search.View, FirebaseEven
 
         mQueueLayoutManager.setReverseLayout(true);
         mMusicQueueList.setLayoutManager(mQueueLayoutManager);
-        mQueueMusicAdapter = new MusicQueueAdapter(getContext());
+        mQueueMusicAdapter = new MusicQueueAdapter(getContext(), this);
         mMusicQueueList.setAdapter(mQueueMusicAdapter);
 
         return mRootView;

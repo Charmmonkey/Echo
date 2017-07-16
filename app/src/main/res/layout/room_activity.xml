@@ -14,14 +14,13 @@
         android:weightSum="1"
         tools:context="com.stream.jerye.queue.room.RoomActivity">
 
-        <android.support.v7.widget.Toolbar
+        <Toolbar
             android:id="@+id/room_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:background="?colorPrimary"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            android:contentInsetEnd="0dp"
+            android:contentInsetStart="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,7 +48,7 @@
 
             </LinearLayout>
 
-        </android.support.v7.widget.Toolbar>
+        </Toolbar>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"
@@ -164,11 +163,20 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/colorPrimary"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/profile_account"
+            android:textAllCaps="true"
+            android:textColor="@color/white" />
 
         <ImageView
             android:id="@+id/profile_picture"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
@@ -176,7 +184,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <Button
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/profile_members"
+            android:textAllCaps="true"
+            android:textColor="@color/white" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/users_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
             android:id="@+id/profile_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

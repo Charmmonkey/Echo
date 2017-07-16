@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -14,14 +13,15 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
@@ -43,14 +43,15 @@ import kaaes.spotify.webapi.android.models.UserPrivate;
 public class RoomActivity extends AppCompatActivity implements
         MusicPlayerListener,
         FirebaseEventBus.FirebaseQueueAdapterHandler,
+        FirebaseEventBus.FirebaseUserAdapterHandler,
         SpotifyProfileAsyncTask.SpotifyProfileCallback {
     private EchoPlayer mPlayer;
     private String TAG = "MainActivity.java";
-    private static SharedPreferences prefs;
     private String mToken, mRoomTitle, intentAction;
     private AnimatedVectorDrawable playToPause, pauseToPlay;
     private FirebaseEventBus.MusicDatabaseAccess mMusicDatabaseAccess;
     private FirebaseEventBus.UserDatabaseAccess mUserDatabaseAccess;
+    private UserAdapter mUserAdapter;
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
@@ -102,7 +103,9 @@ public class RoomActivity extends AppCompatActivity implements
     @BindView(R.id.profile_picture)
     ImageView mProfilePicture;
     @BindView(R.id.profile_logout)
-    Button mProfileLogoutButton;
+    TextView mProfileLogoutButton;
+    @BindView(R.id.users_list)
+    RecyclerView mUsersList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +121,7 @@ public class RoomActivity extends AppCompatActivity implements
 
 
         mMusicDatabaseAccess = new FirebaseEventBus.MusicDatabaseAccess(this, this);
-        mUserDatabaseAccess = new FirebaseEventBus.UserDatabaseAccess(this);
+        mUserDatabaseAccess = new FirebaseEventBus.UserDatabaseAccess(this, this);
 
         playToPause = (AnimatedVectorDrawable) getDrawable(R.drawable.avd_play_to_pause);
         pauseToPlay = (AnimatedVectorDrawable) getDrawable(R.drawable.avd_pause_to_play);
@@ -127,6 +130,7 @@ public class RoomActivity extends AppCompatActivity implements
 
         SpotifyProfileAsyncTask asyncTask = new SpotifyProfileAsyncTask(this, this, mToken);
         asyncTask.execute();
+        mUserDatabaseAccess.getUsers();
 
         if (LobbyActivity.ACTION_NEW_USER.equals(intentAction)) {
             Bundle bundle = intent.getExtras();
@@ -135,6 +139,7 @@ public class RoomActivity extends AppCompatActivity implements
             mRoomTitle = PreferenceUtility.getPreference(PreferenceUtility.ROOM_TITLE);
         }
 
+        setActionBar(mToolbar);
         mToolbarTitle.setText(mRoomTitle);
 
     }
@@ -179,7 +184,6 @@ public class RoomActivity extends AppCompatActivity implements
         });
 
 
-
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -199,6 +203,10 @@ public class RoomActivity extends AppCompatActivity implements
             }
         });
 
+        mUserAdapter = new UserAdapter(this);
+        mUsersList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
+        mUsersList.setAdapter(mUserAdapter);
+
     }
 
 
@@ -208,20 +216,23 @@ public class RoomActivity extends AppCompatActivity implements
         String profilePicture = userPrivate.images.get(0).url;
         String profileId = userPrivate.id;
 
-        String[] profile = {profileName,profilePicture,profileId};
+        String[] profile = {profileName, profilePicture, profileId};
 
-        PreferenceUtility.setPreference(PreferenceUtility.PROFILE_GENERIC,profile);
+        PreferenceUtility.setPreference(PreferenceUtility.PROFILE_GENERIC, profile);
 
         mProfileName.setText(profileName);
         Picasso.with(this).load(profilePicture).into(mProfilePicture);
 
         // Check if user is unique first
         if (LobbyActivity.ACTION_NEW_USER.equals(intentAction)) {
-            User newUser = new User(profileName, profileId, FirebaseInstanceId.getInstance().getToken(),profilePicture);
+            User newUser = new User(profileName, profileId, FirebaseInstanceId.getInstance().getToken(), profilePicture);
             mUserDatabaseAccess.push(newUser);
         }
+    }
 
-
+    @Override
+    public void getUser(User user) {
+        mUserAdapter.addUser(user);
     }
 
     private class SimpleFragmentPageAdapter extends FragmentStatePagerAdapter {
@@ -306,13 +317,13 @@ public class RoomActivity extends AppCompatActivity implements
 
     public void profileLogout(View v) {
         AuthenticationClient.clearCookies(this);
-        prefs.edit()
-                .remove("token")
-                .remove("profile picture")
-                .remove("profile name")
-                .remove("profile id")
-                .remove("room key")
-                .apply();
+//        prefs.edit()
+//                .remove("token")
+//                .remove("profile picture")
+//                .remove("profile name")
+//                .remove("profile id")
+//                .remove("room key")
+//                .apply();
 
         Intent exit = new Intent(this, LobbyActivity.class);
         startActivity(exit);
@@ -323,7 +334,7 @@ public class RoomActivity extends AppCompatActivity implements
         mDrawer.openDrawer(Gravity.START);
     }
 
-    public void playNext(View v){
+    public void playNext(View v) {
         if (mPlayer == null) {
             Log.d("MainActivity.java", "mPlayer is null");
             return;
@@ -331,7 +342,7 @@ public class RoomActivity extends AppCompatActivity implements
         mPlayer.next();
     }
 
-    public void playPrevious(View v){
+    public void playPrevious(View v) {
         if (mPlayer == null) {
             Log.d("MainActivity.java", "mPlayer is null");
             return;

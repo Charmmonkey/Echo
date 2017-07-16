@@ -251,11 +251,12 @@ public class MultiMediaPlayer implements EchoPlayer,
     }
 
     private void playTrack(SimpleTrack track) {
-        mSpotifyPlayer.play(track.getTrack());
-        mMusicPlayerListener.displayCurrentTrack(track);
-        mMusicPlayerListener.getSongDuration((int) track.getDurationInMS());
-        Log.d(TAG, "duration: " + track.getDurationInMS());
-
+        if(num >= 0){
+            mSpotifyPlayer.play(track.getTrack());
+            mMusicPlayerListener.displayCurrentTrack(track);
+            mMusicPlayerListener.getSongDuration((int) track.getDurationInMS());
+            Log.d(TAG, "duration: " + track.getDurationInMS());
+        }
     }
 
     private void nextSong() {

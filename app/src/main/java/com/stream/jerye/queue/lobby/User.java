@@ -24,7 +24,7 @@ public class User {
         return picture;
     }
 
-    public void setPicture() {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 
@@ -32,7 +32,8 @@ public class User {
         return spotifyProfileId;
     }
 
-    public void setSpotifyProfileId(String spotifyProfileId) {
+    public void setSpotifyProfileId(String spotifyProfileId)
+    {
         this.spotifyProfileId = spotifyProfileId;
     }
 

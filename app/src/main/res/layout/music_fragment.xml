@@ -8,40 +8,36 @@
         android:id="@+id/music_queue"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_light"/>
+        android:background="@color/background_light" />
 
-    <android.support.design.widget.AppBarLayout
+
+    <LinearLayout
+        android:id="@+id/search_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_fade_down"
-        >
+        android:orientation="vertical"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
 
-        <LinearLayout
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/search_view"
+            style="@style/search_view_style"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
-            app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed">
+            android:layout_height="40dp" />
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/search_results"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="4dp"
+            android:visibility="gone" />
 
-            <android.support.v7.widget.SearchView
-                android:id="@+id/search_view"
-                style="@style/search_view_style"
-                android:layout_width="match_parent"
-                android:layout_height="40dp" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/search_results"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/background_light"
-                android:scrollbars="vertical"
-                android:visibility="gone" />
-
-        </LinearLayout>
-
-    </android.support.design.widget.AppBarLayout>
+    </LinearLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

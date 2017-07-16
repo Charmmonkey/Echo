@@ -44,7 +44,7 @@ public class FirebaseEventBus {
     }
 
     public interface FirebaseUserAdapterHandler {
-        void getUser(User room);
+        void getUser(User user);
     }
 
 
@@ -332,9 +332,12 @@ public class FirebaseEventBus {
     public static class UserDatabaseAccess {
         private Context mContext;
         private SharedPreferences prefs;
+        private FirebaseUserAdapterHandler mFirebaseUserAdapterHandler;
 
-        public UserDatabaseAccess(Context context) {
+
+        public UserDatabaseAccess(Context context, FirebaseUserAdapterHandler firebaseUserAdapterHandler) {
             mContext = context;
+            mFirebaseUserAdapterHandler = firebaseUserAdapterHandler;
             mFirebaseDatabase = FirebaseDatabase.getInstance();
             prefs = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE);
             String roomKey = prefs.getString("room key", "");
@@ -349,12 +352,13 @@ public class FirebaseEventBus {
             mUserDatabaseReference.push().setValue(user);
         }
 
-        public void getUsers(){
+        public void getUsers() {
             mUserDatabaseReference.orderByKey().addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     User user = dataSnapshot.getValue(User.class);
-
+                    Log.d(TAG, user.getPicture());
+                    mFirebaseUserAdapterHandler.getUser(user);
                 }
 
                 @Override

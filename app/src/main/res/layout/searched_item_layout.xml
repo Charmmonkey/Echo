@@ -26,6 +26,7 @@
             android:ellipsize="marquee"
             android:gravity="bottom"
             android:maxLines="1"
+            android:textColor="@color/white"
             android:scrollHorizontally="true"
             android:textAppearance="?android:attr/textAppearanceMedium"
             />
@@ -37,6 +38,7 @@
             android:layout_weight="1"
             android:ellipsize="marquee"
             android:gravity="top"
+            android:textColor="@color/white"
             android:maxLines="1"
             android:scrollHorizontally="true"
             android:textAppearance="?android:attr/textAppearanceSmall"/>

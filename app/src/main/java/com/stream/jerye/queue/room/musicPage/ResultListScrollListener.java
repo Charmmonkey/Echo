@@ -30,17 +30,21 @@ public abstract class ResultListScrollListener extends RecyclerView.OnScrollList
         int itemCount = mLayoutManager.getItemCount();
         int itemPosition = mLayoutManager.findLastVisibleItemPosition();
 
+        Log.d(TAG, String.format("loading %s, item count: %s/%s, itemPosition %s", mAwaitingItems, mCurrentItemCount, itemCount, itemPosition));
+
         if (mAwaitingItems && itemCount > mCurrentItemCount) {
             mCurrentItemCount = itemCount;
             mAwaitingItems = false;
+
         }
 
-        Log.d(TAG, String.format("loading %s, item count: %s/%s, itemPosition %s", mAwaitingItems, mCurrentItemCount, itemCount, itemPosition));
 
         if (!mAwaitingItems && itemPosition + 1 >= itemCount - SCROLL_BUFFER) {
             mAwaitingItems = true;
             onLoadMore();
         }
+
+
     }
 
     public abstract void onLoadMore();

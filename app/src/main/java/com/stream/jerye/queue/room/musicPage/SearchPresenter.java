@@ -61,6 +61,7 @@ public class SearchPresenter implements Search.ActionListener {
                 @Override
                 public void onComplete(List<Track> items) {
                     mView.addData(items);
+                    Log.d(TAG, "adding data to result list");
                 }
 
                 @Override

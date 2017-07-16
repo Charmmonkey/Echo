@@ -10,4 +10,8 @@
     <string name="skip_previous">skip to previous track</string>
     <string name="skip_next">skip to next track</string>
     <string name="current_album_image">current album image</string>
+
+    <string name="profile_members">members</string>
+    <string name="profile_account">account</string>
+
 </resources>
