@@ -10,4 +10,8 @@
     <color name="transparent">#00FFFFFF</color>
     <color name="white_translucent">#CCFAFAFA</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="widget_primary">#99546E7A</color>
+    <color name="widget_primaryDark">#9937474F</color>
+    <color name="widget_accent">#99FFAB40</color>
 </resources>

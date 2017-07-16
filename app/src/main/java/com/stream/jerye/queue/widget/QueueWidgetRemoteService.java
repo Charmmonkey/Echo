@@ -6,10 +6,9 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.squareup.picasso.Picasso;
-import com.stream.jerye.queue.room.musicPage.SimpleTrack;
 import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
+import com.stream.jerye.queue.room.musicPage.SimpleTrack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,14 +73,12 @@ public class QueueWidgetRemoteService extends RemoteViewsService {
             Log.d(TAG, "getViewAt: " + position);
 
             SimpleTrack track = mList.get(position);
-            String imageUrl = track.getAlbumImage();
             String artistName = track.getArtistName();
             String trackName = track.getName();
             RemoteViews widgetItemView;
 
             widgetItemView = new RemoteViews(getPackageName(), R.layout.widget_list_item);
 
-            Picasso.with(getApplicationContext()).load(imageUrl).into(widgetItemView,R.id.widget_queued_music_album_image, appWidgetIdsArray);
             widgetItemView.setTextViewText(R.id.widget_queued_music_name,trackName);
             widgetItemView.setTextViewText(R.id.widget_queued_music_artists,artistName);
 

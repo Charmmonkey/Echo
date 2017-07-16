@@ -2,30 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    android:paddingStart="8dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
+    android:paddingEnd="8dp">
 
-    <ImageView
-        android:id="@+id/widget_queued_music_album_image"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/widget_queued_music_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="vertical">
+        android:textColor="@color/white"
+        android:textSize="16sp"/>
 
-        <TextView
-            android:id="@+id/widget_queued_music_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/widget_queued_music_artists"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/widget_queued_music_artists"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="12sp"/>
 
 
 </LinearLayout>

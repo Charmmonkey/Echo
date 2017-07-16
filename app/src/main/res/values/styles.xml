@@ -6,8 +6,15 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@color/background_light</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:toolbarStyle">@style/EchoToolbarStyle</item>
     </style>
 
+    <style name="EchoToolbarStyle">
+        <item name="android:background">@color/colorPrimary</item>
+
+    </style>
     <style name="edit_text_style">
         <item name="android:paddingStart">16dp</item>
         <item name="android:paddingEnd">16dp</item>
@@ -26,10 +33,33 @@
     </style>
 
     <style name="playlist_track_style">
-        <item name="android:layout_marginStart">8dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
-        <item name="android:layout_marginBottom">2dp</item>
-        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+    </style>
+
+    <style name="playlist_track_theme">
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="music_bar_style">
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="profile_drawer_style">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="profile_drawer_label_style">
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
     </style>
 
 </resources>

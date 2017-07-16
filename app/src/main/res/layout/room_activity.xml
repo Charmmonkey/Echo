@@ -18,7 +18,7 @@
             android:id="@+id/room_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="?colorPrimary"
+            android:background="@color/colorPrimaryDark"
             android:contentInsetEnd="0dp"
             android:contentInsetStart="0dp">
 
@@ -26,7 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="1">
 
                 <ImageView
                     android:id="@+id/room_toolbar_profile"
@@ -38,14 +39,22 @@
 
                 <TextView
                     android:id="@+id/room_toolbar_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingEnd="16dp"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     tools:text="Test Room Title" />
 
+                <ImageView
+                    android:id="@+id/room_toolbar_page_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="viewPagerSwipe"
+                    android:padding="16dp"
+                    android:src="@drawable/chat_icon" />
             </LinearLayout>
 
         </Toolbar>
@@ -61,6 +70,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
             android:orientation="horizontal"
+            android:theme="@style/music_bar_style"
             android:weightSum="1">
 
             <ImageView
@@ -102,7 +112,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:textColor="@color/white"
                     android:textSize="14dp"
                     tools:text="current song" />
 
@@ -111,7 +120,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/music_current_title"
-                    android:textColor="@color/gray_accent"
                     android:textSize="8dp"
                     tools:text="Artist" />
 
@@ -120,8 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:text="0:00"
-                    android:textColor="@color/gray_accent" />
+                    android:text="0:00" />
 
                 <SeekBar
                     android:id="@+id/music_seekbar"
@@ -162,35 +169,16 @@
         android:layout_width="200dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/colorPrimary"
         android:orientation="vertical"
+        android:theme="@style/profile_drawer_style"
         android:weightSum="1">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="@string/profile_account"
-            android:textAllCaps="true"
-            android:textColor="@color/white" />
-
-        <ImageView
-            android:id="@+id/profile_picture"
+            style="@style/profile_drawer_label_style"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="@string/profile_members"
-            android:textAllCaps="true"
-            android:textColor="@color/white" />
+            android:drawableStart="@drawable/members_icon"
+            android:text="@string/profile_members" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/users_list"
@@ -199,11 +187,42 @@
             android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/profile_logout"
-            android:layout_width="wrap_content"
+            style="@style/profile_drawer_label_style"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableStart="@drawable/fingerprint_icon"
+            android:text="@string/profile_account" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/profile_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/spotify_icon_white" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:id="@+id/profile_logout"
+            style="@style/profile_drawer_label_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/profile_icon"
             android:onClick="profileLogout"
-            android:text="Sign out" />
+            android:text="@string/profile_sign_out" />
 
 
     </LinearLayout>

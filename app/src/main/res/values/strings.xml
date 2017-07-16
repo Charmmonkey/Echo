@@ -13,5 +13,8 @@
 
     <string name="profile_members">members</string>
     <string name="profile_account">account</string>
+    <string name="profile_sign_out">log out</string>
+
+    <string name="widget_name">Echo Playlist</string>
 
 </resources>

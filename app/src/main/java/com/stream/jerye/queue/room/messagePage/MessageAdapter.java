@@ -55,7 +55,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
             holder.messageContent.setBackground(ContextCompat.getDrawable(mContext, R.drawable.message_bubble_me));
         }else if(name.equals("SYSTEM ANNOUNCEMENT") ){
             holder.messageName.setVisibility(View.GONE);
-            holder.messageContent.setTextColor(Color.GRAY);
+            holder.messageContent.setTextColor(ContextCompat.getColor(mContext,R.color.colorPrimaryDark));
             holder.messageContent.setLayoutParams(paramsSystems);
             holder.messageContent.setBackgroundColor(ContextCompat.getColor(mContext,R.color.transparent));
         }

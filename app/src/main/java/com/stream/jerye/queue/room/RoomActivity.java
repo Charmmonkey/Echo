@@ -4,12 +4,17 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +31,7 @@ import android.widget.Toolbar;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.stream.jerye.queue.PreferenceUtility;
 import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
@@ -106,6 +112,8 @@ public class RoomActivity extends AppCompatActivity implements
     TextView mProfileLogoutButton;
     @BindView(R.id.users_list)
     RecyclerView mUsersList;
+    @BindView(R.id.room_toolbar_page_icon)
+    ImageView mToolbarIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +135,26 @@ public class RoomActivity extends AppCompatActivity implements
         pauseToPlay = (AnimatedVectorDrawable) getDrawable(R.drawable.avd_pause_to_play);
 
         mPager.setAdapter(new SimpleFragmentPageAdapter(getSupportFragmentManager()));
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 0 ){
+                    mToolbarIcon.setImageDrawable(ContextCompat.getDrawable(RoomActivity.this,R.drawable.chat_icon));
+                }else{
+                    mToolbarIcon.setImageDrawable(ContextCompat.getDrawable(RoomActivity.this,R.drawable.music_icon));
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         SpotifyProfileAsyncTask asyncTask = new SpotifyProfileAsyncTask(this, this, mToken);
         asyncTask.execute();
@@ -221,7 +249,30 @@ public class RoomActivity extends AppCompatActivity implements
         PreferenceUtility.setPreference(PreferenceUtility.PROFILE_GENERIC, profile);
 
         mProfileName.setText(profileName);
-        Picasso.with(this).load(profilePicture).into(mProfilePicture);
+
+        Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                Log.d("Profile", "bitmap target");
+
+                BitmapDrawable drawable = new BitmapDrawable(getResources(), bitmap);
+                Drawable bubble = getDrawable(R.drawable.user_picture_bubble);
+                Drawable[] drawables = {drawable, bubble};
+                LayerDrawable layer = new LayerDrawable(drawables);
+                mProfilePicture.setImageDrawable(layer);
+                Log.d("Profile", "loaded circle");
+            }
+            @Override
+            public void onBitmapFailed(Drawable errorDrawable) {
+
+            }
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
+        mProfilePicture.setTag(target);
+        Picasso.with(this).load(profilePicture).into(target);
 
         // Check if user is unique first
         if (LobbyActivity.ACTION_NEW_USER.equals(intentAction)) {
@@ -260,6 +311,7 @@ public class RoomActivity extends AppCompatActivity implements
         public int getItemPosition(Object object) {
             return super.getItemPosition(object);
         }
+
 
     }
 
@@ -348,6 +400,18 @@ public class RoomActivity extends AppCompatActivity implements
             return;
         }
         mPlayer.previous();
+    }
+
+    public void viewPagerSwipe(View v){
+        if(mPager.getCurrentItem() == 0 ){
+            mPager.setCurrentItem(1);
+            mToolbarIcon.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.music_icon));
+
+        }else{
+            mPager.setCurrentItem(0);
+            mToolbarIcon.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.chat_icon));
+
+        }
     }
 
 }

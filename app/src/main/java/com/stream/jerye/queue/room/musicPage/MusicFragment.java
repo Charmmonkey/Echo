@@ -97,7 +97,6 @@ public class MusicFragment extends Fragment implements Search.View,
                 Log.d(TAG, "search view clicked");
                 mSearchView.setIconified(false);
                 isTyping = true;
-                getActivity().getActionBar().hide();
             }
         });
 
@@ -108,7 +107,6 @@ public class MusicFragment extends Fragment implements Search.View,
                 mMusicResultsList.setVisibility(View.GONE);
                 mSearchResultsAdapter.clearData();
                 mSearchView.clearFocus();
-                getActivity().getActionBar().show();
                 return true;
             }
         });
@@ -156,7 +154,6 @@ public class MusicFragment extends Fragment implements Search.View,
                 mSearchContainer.setBackground(ContextCompat.getDrawable(getContext(),R.color.transparent));
                 mSearchResultsAdapter.clearData();
                 isTyping = true;
-                getActivity().getActionBar().show();
             }
         });
 
