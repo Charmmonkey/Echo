@@ -10,6 +10,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.stream.jerye.queue.PreferenceUtility;
 import com.stream.jerye.queue.room.messagePage.Message;
 import com.stream.jerye.queue.room.musicPage.SimpleTrack;
 import com.stream.jerye.queue.lobby.Room;
@@ -335,12 +336,24 @@ public class FirebaseEventBus {
         private FirebaseUserAdapterHandler mFirebaseUserAdapterHandler;
 
 
+        public UserDatabaseAccess(Context context) {
+            mContext = context;
+            mFirebaseDatabase = FirebaseDatabase.getInstance();
+            PreferenceUtility.initialize(mContext);
+            String roomKey = PreferenceUtility.getPreference(PreferenceUtility.ROOM_KEY);
+            if (!roomKey.equals("")) {
+                mUserDatabaseReference = mFirebaseDatabase.getReference().child(roomKey).child("users");
+            } else {
+                Log.e(TAG, "invalid room key");
+            }
+        }
+
         public UserDatabaseAccess(Context context, FirebaseUserAdapterHandler firebaseUserAdapterHandler) {
             mContext = context;
             mFirebaseUserAdapterHandler = firebaseUserAdapterHandler;
             mFirebaseDatabase = FirebaseDatabase.getInstance();
-            prefs = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE);
-            String roomKey = prefs.getString("room key", "");
+            PreferenceUtility.initialize(mContext);
+            String roomKey = PreferenceUtility.getPreference(PreferenceUtility.ROOM_KEY);
             if (!roomKey.equals("")) {
                 mUserDatabaseReference = mFirebaseDatabase.getReference().child(roomKey).child("users");
             } else {
@@ -352,12 +365,20 @@ public class FirebaseEventBus {
             mUserDatabaseReference.push().setValue(user);
         }
 
+        public void removeUser(){
+            mUserDatabaseReference.child(PreferenceUtility.getPreference(PreferenceUtility.USER_KEY)).removeValue();
+        }
+
         public void getUsers() {
             mUserDatabaseReference.orderByKey().addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     User user = dataSnapshot.getValue(User.class);
-                    Log.d(TAG, user.getPicture());
+
+                    if(user.getSpotifyProfileId().equals(PreferenceUtility.getSpotifyPreference()[2])){
+                        PreferenceUtility.setPreference(PreferenceUtility.USER_KEY, dataSnapshot.getKey());
+                    }
+
                     mFirebaseUserAdapterHandler.getUser(user);
                 }
 

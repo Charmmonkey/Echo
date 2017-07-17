@@ -123,28 +123,36 @@
                     android:textSize="8dp"
                     tools:text="Artist" />
 
-                <TextView
-                    android:id="@+id/music_progress"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:text="0:00" />
+                    android:weightSum="1">
+                    <TextView
+                        android:id="@+id/music_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:text="0:00" />
 
-                <SeekBar
-                    android:id="@+id/music_seekbar"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_toRightOf="@id/music_progress" />
+                    <SeekBar
+                        android:id="@+id/music_seekbar"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toRightOf="@id/music_progress" />
 
-                <TextView
-                    android:id="@+id/music_duration"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_toRightOf="@id/music_seekbar"
-                    android:text="0:00"
-                    android:textColor="@color/gray_accent" />
+                    <TextView
+                        android:id="@+id/music_duration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toRightOf="@id/music_seekbar"
+                        android:text="0:00"
+                        android:textColor="@color/gray_accent" />
+                </LinearLayout>
+
 
 
             </RelativeLayout>

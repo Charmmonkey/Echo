@@ -369,13 +369,12 @@ public class RoomActivity extends AppCompatActivity implements
 
     public void profileLogout(View v) {
         AuthenticationClient.clearCookies(this);
-//        prefs.edit()
-//                .remove("token")
-//                .remove("profile picture")
-//                .remove("profile name")
-//                .remove("profile id")
-//                .remove("room key")
-//                .apply();
+
+        mUserDatabaseAccess.removeUser();
+
+        PreferenceUtility.deleteSpotifyPreferences();
+        PreferenceUtility.deleteRoomPreference();
+        PreferenceUtility.deleteUserPreference();
 
         Intent exit = new Intent(this, LobbyActivity.class);
         startActivity(exit);

@@ -15,6 +15,7 @@ import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import com.stream.jerye.queue.BuildConfig;
 import com.stream.jerye.queue.PreferenceUtility;
 import com.stream.jerye.queue.R;
+import com.stream.jerye.queue.firebase.FirebaseEventBus;
 import com.stream.jerye.queue.room.RoomActivity;
 
 import butterknife.BindView;
@@ -28,14 +29,16 @@ public class LobbyActivity extends AppCompatActivity {
     public static final String ACTION_NEW_USER = "com.stream.jerye.queue.ACTION_NEW_USER";
 
     private static final int REQUEST_CODE = 42;
-    private PreferenceUtility prefs;
     private String roomKey;
+    private FirebaseEventBus.UserDatabaseAccess mUserDatabaseAccess;
 
 
     @BindView(R.id.lobby_create_button)
     ImageView mCreateRoomButton;
     @BindView(R.id.lobby_join_button)
     ImageView mJoinRoomButton;
+    @BindView(R.id.lobby_clear_button)
+    ImageView mClearRoomButton;
 
 
     @Override
@@ -47,15 +50,22 @@ public class LobbyActivity extends AppCompatActivity {
         Stetho.initializeWithDefaults(this);
         PreferenceUtility.initialize(this);
 
+        mUserDatabaseAccess = new FirebaseEventBus.UserDatabaseAccess(this);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         roomKey = PreferenceUtility.getPreference(PreferenceUtility.ROOM_KEY);
+
         if (!roomKey.equals("")) {
             mJoinRoomButton.setImageDrawable(getDrawable(R.drawable.ic_refresh_black_24dp));
+            mClearRoomButton.setVisibility(View.VISIBLE);
+
+        }else{
+            mJoinRoomButton.setImageDrawable(getDrawable(R.drawable.join_room_icon));
+            mClearRoomButton.setVisibility(View.GONE);
         }
     }
 
@@ -87,6 +97,8 @@ public class LobbyActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
+                        roomKey = PreferenceUtility.getPreference(PreferenceUtility.ROOM_KEY);
+
                         if (!roomKey.equals("")) {
                             Intent intent = new Intent(LobbyActivity.this, RoomActivity.class)
                                     .setAction(ACTION_EXISTING_USER);
@@ -113,9 +125,11 @@ public class LobbyActivity extends AppCompatActivity {
     }
 
     public void clearRoomPreference(View v) {
-//        prefs.edit().putString("room key", "").apply();
-//        roomKey = "";
-        mJoinRoomButton.setImageDrawable(getDrawable(R.drawable.ic_play));
+        mUserDatabaseAccess.removeUser();
+        PreferenceUtility.deleteRoomPreference();
+        PreferenceUtility.deleteUserPreference(); //Since room preference is deleted, next user key will be different
+        mJoinRoomButton.setImageDrawable(getDrawable(R.drawable.join_room_icon));
+        mClearRoomButton.setVisibility(View.GONE);
     }
 
 }

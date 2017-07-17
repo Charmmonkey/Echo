@@ -9,6 +9,7 @@ public class User {
     private String registrationToken;
     private String name;
     private String picture;
+    private transient String userKey;
 
     public User() {
     }
@@ -18,6 +19,14 @@ public class User {
         this.registrationToken = registrationToken;
         this.name = name;
         this.picture = picture;
+    }
+
+    public String getUserKey() {
+        return userKey;
+    }
+
+    public void setUserKey(String userKey) {
+        this.userKey = userKey;
     }
 
     public String getPicture() {

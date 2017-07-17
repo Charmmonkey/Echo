@@ -17,4 +17,8 @@
 
     <string name="widget_name">Echo Playlist</string>
 
+    <string name="lobby_login">log in</string>
+    <string name="lobby_join">join room</string>
+    <string name="lobby_create">create room</string>
+
 </resources>

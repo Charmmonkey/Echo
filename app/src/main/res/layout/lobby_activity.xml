@@ -6,27 +6,44 @@
     android:layout_height="match_parent"
     tools:context="com.stream.jerye.queue.lobby.LobbyActivity">
 
-    <View
-        android:id="@+id/lobby_divider"
-        android:layout_width="3dp"
-        android:layout_height="80dp"
+    <ImageView
+        android:id="@+id/lobby_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@color/gray_accent"/>
+        android:src="@drawable/echo_icon"
+        />
+    <View
+        android:id="@+id/lobby_divider_up"
+        android:layout_width="2dp"
+        android:layout_height="30dp"
+        android:layout_above="@id/lobby_center"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/background_fade_up"/>
+
+
+    <View
+        android:id="@+id/lobby_divider_down"
+        android:layout_width="2dp"
+        android:layout_height="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/lobby_center"
+        android:background="@drawable/background_fade_down"/>
     <ImageView
         android:id="@+id/lobby_create_button"
-        android:layout_width="wrap_content"
-        android:layout_toLeftOf="@id/lobby_divider"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_toStartOf="@id/lobby_center"
+        android:layout_height="40dp"
         android:layout_centerVertical="true"
         android:src="@drawable/add_icon"/>
 
     <ImageView
         android:layout_centerVertical="true"
         android:id="@+id/lobby_join_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/lobby_divider"
-        android:src="@drawable/ic_play"/>
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_toEndOf="@id/lobby_center"
+        android:src="@drawable/join_room_icon"/>
 
     <ImageView
         android:layout_centerVertical="true"
@@ -35,7 +52,8 @@
         android:layout_height="wrap_content"
         android:onClick="clearRoomPreference"
         android:layout_toRightOf="@id/lobby_join_button"
-        android:src="@drawable/close_icon"/>
+        android:src="@drawable/close_icon"
+        android:visibility="gone"/>
 
     <TextView
         android:layout_alignParentBottom="true"
@@ -48,7 +66,7 @@
         android:drawablePadding="8dp"
         android:background="@drawable/background_fade_up"
         android:textAllCaps="true"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:drawableTop="@drawable/profile_icon"
         android:onClick="loginButton"/>
 

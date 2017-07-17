@@ -17,6 +17,7 @@ public class PreferenceUtility {
     public static final String PROFILE_NAME = "profile name";
     public static final String PROFILE_PICTURE = "profile picture url";
     public static final String PROFILE_ID = "profile id";
+    public static final String USER_KEY = "user key";
 
     public static void initialize(Context context) {
         prefs = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
@@ -48,7 +49,9 @@ public class PreferenceUtility {
                         .putString(PROFILE_ID, value[2])
                         .apply();
                 break;
-
+            case USER_KEY:
+                prefs.edit().putString(USER_KEY,value[0]).apply();
+                break;
             default:
                 break;
 
@@ -66,20 +69,37 @@ public class PreferenceUtility {
             case ROOM_PASSWORD:
                 return prefs.getString(ROOM_PASSWORD, "");
             case PROFILE_NAME:
-                return prefs.getString(PROFILE_NAME,"");
+                return prefs.getString(PROFILE_NAME, "");
+            case USER_KEY:
+                return prefs.getString(USER_KEY,"");
             default:
                 return "";
         }
 
     }
 
-    public static String[] getProfilePreference() {
+    public static String[] getSpotifyPreference() {
         return new String[]{prefs.getString(PROFILE_NAME, ""),
                 prefs.getString(PROFILE_PICTURE, ""),
-                prefs.getString(PROFILE_ID, ""),
+                prefs.getString(PROFILE_ID, "")
         };
     }
 
+    public static void deleteSpotifyPreferences() {
+        prefs.edit().remove(PROFILE_NAME)
+                .remove(PROFILE_ID)
+                .remove(PROFILE_PICTURE)
+                .remove(SPOTIFY_TOKEN)
+                .apply();
+    }
+
+    public static void deleteRoomPreference(){
+        prefs.edit().remove(ROOM_KEY).apply();
+    }
+
+    public static void deleteUserPreference(){
+        prefs.edit().remove(USER_KEY).apply();
+    }
 
 }
 

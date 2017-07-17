@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -79,7 +80,10 @@ public class CreateRoomDiaglog extends DialogFragment {
 
         final AlertDialog alertDialog = (AlertDialog) getDialog();
         if (alertDialog != null) {
+            Button negativeButton = alertDialog.getButton(Dialog.BUTTON_NEGATIVE);
+            negativeButton.setTextColor(ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark));
             Button positiveButton = alertDialog.getButton(Dialog.BUTTON_POSITIVE);
+            positiveButton.setTextColor(ContextCompat.getColor(getActivity(),R.color.colorPrimaryDark));
             positiveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
