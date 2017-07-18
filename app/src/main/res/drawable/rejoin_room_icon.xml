@@ -8,9 +8,10 @@
     <group
         android:name="@string/groupRejoinJoin"
         android:pivotX="@integer/viewport_center_x"
-        android:pivotY="@integer/viewport_center_y" >
+        android:pivotY="@integer/viewport_center_y">
         <path
-            android:pathData="@string/path_join"
+            android:name="@string/rejoin"
+            android:pathData="@string/path_rejoin"
             android:strokeColor="@color/white"
             android:strokeLineCap="round"
             android:strokeLineJoin="round"

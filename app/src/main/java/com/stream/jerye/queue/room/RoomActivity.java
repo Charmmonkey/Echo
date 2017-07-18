@@ -363,6 +363,7 @@ public class RoomActivity extends AppCompatActivity implements
     @Override
     protected void onStop() {
         super.onStop();
+
         unbindService(mServiceConnection);
 
     }

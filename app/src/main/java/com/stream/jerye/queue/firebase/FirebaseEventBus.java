@@ -120,36 +120,38 @@ public class FirebaseEventBus {
 
         // Different from childEventListener because we don't want duplicate Broadcasts from app and widget.
         public void addWidgetUpdater() {
-            mMusicDatabaseReference.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    SimpleTrack simpleTrack = dataSnapshot.getValue(SimpleTrack.class);
-                    simpleTrack.setKey(dataSnapshot.getKey());
-                    mFirebaseQueueAdapterHandler.enqueue(simpleTrack);
-                    Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
-                    mContext.sendBroadcast(dataUpdatedIntent);
-                }
+            if (mMusicDatabaseReference != null) {
+                mMusicDatabaseReference.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        SimpleTrack simpleTrack = dataSnapshot.getValue(SimpleTrack.class);
+                        simpleTrack.setKey(dataSnapshot.getKey());
+                        mFirebaseQueueAdapterHandler.enqueue(simpleTrack);
+                        Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
+                        mContext.sendBroadcast(dataUpdatedIntent);
+                    }
 
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-                }
+                    }
 
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-                }
+                    }
 
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-                }
+                    }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                }
-            });
+                    }
+                });
+            }
         }
 
         public void push(SimpleTrack simpleTrack) {
@@ -365,7 +367,7 @@ public class FirebaseEventBus {
             mUserDatabaseReference.push().setValue(user);
         }
 
-        public void removeUser(){
+        public void removeUser() {
             mUserDatabaseReference.child(PreferenceUtility.getPreference(PreferenceUtility.USER_KEY)).removeValue();
         }
 
@@ -375,7 +377,7 @@ public class FirebaseEventBus {
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     User user = dataSnapshot.getValue(User.class);
 
-                    if(user.getSpotifyProfileId().equals(PreferenceUtility.getSpotifyPreference()[2])){
+                    if (user.getSpotifyProfileId().equals(PreferenceUtility.getSpotifyPreference()[2])) {
                         PreferenceUtility.setPreference(PreferenceUtility.USER_KEY, dataSnapshot.getKey());
                     }
 

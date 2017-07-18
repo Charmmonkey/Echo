@@ -1,6 +1,7 @@
 package com.stream.jerye.queue.lobby;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -27,11 +28,12 @@ public class LobbyActivity extends AppCompatActivity {
     private static final String REDIRECT_URI = "https://en.wikipedia.org/wiki/Whitelist";
     public static final String ACTION_EXISTING_USER = "com.stream.jerye.queue.ACTION_EXISTING_USER";
     public static final String ACTION_NEW_USER = "com.stream.jerye.queue.ACTION_NEW_USER";
+    private AnimatedVectorDrawable returnToJoin;
+
 
     private static final int REQUEST_CODE = 42;
     private String roomKey;
     private FirebaseEventBus.UserDatabaseAccess mUserDatabaseAccess;
-
 
     @BindView(R.id.lobby_create_button)
     ImageView mCreateRoomButton;
@@ -50,6 +52,9 @@ public class LobbyActivity extends AppCompatActivity {
         Stetho.initializeWithDefaults(this);
         PreferenceUtility.initialize(this);
 
+        returnToJoin = (AnimatedVectorDrawable) getDrawable(R.drawable.avd_return_to_join);
+
+
         mUserDatabaseAccess = new FirebaseEventBus.UserDatabaseAccess(this);
 
     }
@@ -60,7 +65,7 @@ public class LobbyActivity extends AppCompatActivity {
         roomKey = PreferenceUtility.getPreference(PreferenceUtility.ROOM_KEY);
 
         if (!roomKey.equals("")) {
-            mJoinRoomButton.setImageDrawable(getDrawable(R.drawable.ic_refresh_black_24dp));
+            mJoinRoomButton.setImageDrawable(getDrawable(R.drawable.rejoin_room_icon));
             mClearRoomButton.setVisibility(View.VISIBLE);
 
         }else{
@@ -128,7 +133,8 @@ public class LobbyActivity extends AppCompatActivity {
         mUserDatabaseAccess.removeUser();
         PreferenceUtility.deleteRoomPreference();
         PreferenceUtility.deleteUserPreference(); //Since room preference is deleted, next user key will be different
-        mJoinRoomButton.setImageDrawable(getDrawable(R.drawable.join_room_icon));
+        mJoinRoomButton.setImageDrawable(returnToJoin);
+        returnToJoin.start();
         mClearRoomButton.setVisibility(View.GONE);
     }
 

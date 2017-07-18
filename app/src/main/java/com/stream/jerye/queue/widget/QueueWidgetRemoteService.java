@@ -43,6 +43,8 @@ public class QueueWidgetRemoteService extends RemoteViewsService {
             appWidgetIdsArray = appWidgetIds;
 
             mMusicDatabaseAccess = new FirebaseEventBus.MusicDatabaseAccess(getApplicationContext(), this);
+
+
             mMusicDatabaseAccess.addWidgetUpdater();
         }
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/rejoin_room_icon">
+
+    <target
+        android:name="@string/rejoin"
+        android:animation="@animator/rejoin_to_join" />
+
+    <target
+    android:name="@string/groupRejoinJoin"
+    android:animation="@animator/rotate_rejoin_to_join" />
+
+</animated-vector>
