@@ -24,4 +24,5 @@
     <string name="lobby_exit">exit</string>
     <string name="lobby_create_short">create</string>
     <string name="lobby_login">log in</string>
+    <string name="lobby_loggedin">logged in</string>
 </resources>

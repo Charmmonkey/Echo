@@ -98,6 +98,8 @@ public class JoinRoomDialog extends DialogFragment implements FirebaseEventBus.F
             positiveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    boolean enteredRoomFlag = false;
                     if(!roomTitleEditText.getText().toString().equals("")){
                         mTitleAttempt = roomTitleEditText.getText().toString();
                     }else{
@@ -105,9 +107,7 @@ public class JoinRoomDialog extends DialogFragment implements FirebaseEventBus.F
                     }
                     mPasswordAttempt = roomPasswordEditText.getText().toString();
 
-                    Log.d("Dialog", mTitleAttempt + mPasswordAttempt + "|||");
                     for (Room room : listOfRooms) {
-                        Log.d("Dialog", "title: " + room.getTitle() + "password: " + room.getPassword() + "|||");
 
                         if (mTitleAttempt.equals(room.getTitle()) && (mPasswordAttempt.equals(room.getPassword()) || room.getPassword() == null)) {
                             PreferenceUtility.setPreference(PreferenceUtility.ROOM_KEY,room.getRoomKey());
@@ -119,12 +119,16 @@ public class JoinRoomDialog extends DialogFragment implements FirebaseEventBus.F
                                     .putExtra("room password", mPasswordAttempt);
                             startActivity(intent);
                             alertDialog.dismiss();
+                            enteredRoomFlag = true;
                             break;
                         }
 
                     }
 
-                    Toast.makeText(getActivity(), "Incorrect Room & Password\nPlease Try Again", Toast.LENGTH_SHORT).show();
+                    if(!enteredRoomFlag){
+                        Toast.makeText(getActivity(), "Incorrect Room & Password\nPlease Try Again", Toast.LENGTH_SHORT).show();
+
+                    }
                 }
             });
         }

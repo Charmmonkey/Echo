@@ -11,13 +11,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/echo_icon"/>
+        android:src="@drawable/echo_icon" />
 
     <View
         android:id="@+id/lobby_divider_up"
         android:layout_width="2dp"
         android:layout_height="30dp"
-        android:backgroundTint="whit"
         android:layout_above="@id/lobby_center"
         android:layout_centerHorizontal="true"
         android:background="@drawable/background_fade_up" />
@@ -32,7 +31,6 @@
         android:background="@drawable/background_fade_down" />
 
 
-
     <ImageView
         android:id="@+id/lobby_create_button"
         android:layout_width="40dp"
@@ -42,14 +40,16 @@
         android:src="@drawable/add_icon" />
 
     <TextView
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
+        android:id="@+id/create_word"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@id/lobby_create_button"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
         android:text="@string/lobby_create_short"
         android:textAllCaps="true"
+        android:visibility="invisible"
         android:textSize="16sp" />
 
     <ImageView
@@ -60,44 +60,61 @@
         android:layout_toEndOf="@id/lobby_center"
         android:src="@drawable/join_room_icon" />
 
-    <ImageView
-        android:id="@+id/lobby_clear_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_toStartOf="@id/exit_word"
-        android:layout_centerVertical="true"
-        android:onClick="clearRoomPreference"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/close_icon" />
-
     <TextView
-        android:paddingStart="8dp"
         android:id="@+id/return_word"
-        android:paddingEnd="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/lobby_join_button"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:visibility="invisible"
         android:text="@string/lobby_return"
         android:textAllCaps="true"
         android:textSize="16sp" />
 
-
     <TextView
+        android:id="@+id/join_word"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_toEndOf="@id/lobby_clear_button"
-        android:text="@string/lobby_exit"
-        android:textAllCaps="true"
-        android:gravity="center_vertical"
-        android:layout_alignTop="@id/lobby_clear_button"
-        android:layout_alignStart="@id/return_word"
-        android:paddingStart="8dp"
-        android:id="@+id/exit_word"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/lobby_join_button"
         android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:visibility="invisible"
+        android:text="@string/lobby_join_short"
+        android:textAllCaps="true"
         android:textSize="16sp" />
 
+
     <TextView
+        android:id="@+id/exit_word"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignStart="@id/return_word"
+        android:layout_below="@id/return_word"
+        android:gravity="center_vertical"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:text="@string/lobby_exit"
+        android:textAllCaps="true"
+        android:layout_marginTop="8dp"
+        android:visibility="invisible"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/lobby_clear_button"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignTop="@id/exit_word"
+        android:layout_toStartOf="@id/exit_word"
+        android:onClick="clearRoomPreference"
+        android:visibility="invisible"
+        android:layout_margin="6dp"
+        android:src="@drawable/close_icon" />
+
+    <TextView
+        android:id="@+id/lobby_login_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
