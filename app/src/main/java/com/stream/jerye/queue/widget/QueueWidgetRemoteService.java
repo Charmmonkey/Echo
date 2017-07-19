@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
+import com.stream.jerye.queue.PreferenceUtility;
 import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
 import com.stream.jerye.queue.room.musicPage.SimpleTrack;
@@ -28,23 +29,30 @@ public class QueueWidgetRemoteService extends RemoteViewsService {
         return new QueueRemoteViewsFactory(appWidgetIds);
     }
 
-    private class QueueRemoteViewsFactory implements RemoteViewsFactory, FirebaseEventBus.FirebaseQueueAdapterHandler {
+
+
+    public class QueueRemoteViewsFactory implements RemoteViewsFactory, FirebaseEventBus.FirebaseQueueAdapterHandler{
         private FirebaseEventBus.MusicDatabaseAccess mMusicDatabaseAccess;
         private List<SimpleTrack> mList = new ArrayList<>();
         private int[] appWidgetIdsArray;
         private String TAG = "Widget";
+        private boolean widgetConnectedFlag = false;
+
+
 
         @Override
         public void enqueue(SimpleTrack simpleTrack) {
             mList.add(simpleTrack);
         }
 
+
         public QueueRemoteViewsFactory(int[] appWidgetIds){
             appWidgetIdsArray = appWidgetIds;
 
-            mMusicDatabaseAccess = new FirebaseEventBus.MusicDatabaseAccess(getApplicationContext(), this);
-
+            PreferenceUtility.initialize(getApplicationContext());
+            mMusicDatabaseAccess = new FirebaseEventBus.MusicDatabaseAccess(getApplicationContext(),this);
             mMusicDatabaseAccess.addWidgetUpdater();
+
         }
 
         @Override
@@ -67,7 +75,7 @@ public class QueueWidgetRemoteService extends RemoteViewsService {
 
         @Override
         public void onDestroy() {
-
+            mMusicDatabaseAccess.removeWidgetUpdater();
         }
 
         @Override

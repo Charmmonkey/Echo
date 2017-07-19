@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -15,10 +14,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.PreferenceUtility;
-import com.stream.jerye.queue.room.RoomActivity;
+import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
+import com.stream.jerye.queue.room.RoomActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,7 +89,6 @@ public class CreateRoomDiaglog extends DialogFragment {
                     mRoomTitle = roomTitleEditText.getText().toString();
                     mRoomPassword = roomPasswordEditText.getText().toString();
 
-                    Log.d("Dialog", mRoomTitle + mRoomPassword);
                     if (!mRoomTitle.equals("")) {
 
                         FirebaseEventBus.RoomDatabaseAccess roomDatabaseAccess = new FirebaseEventBus.RoomDatabaseAccess(getActivity());
@@ -107,7 +105,7 @@ public class CreateRoomDiaglog extends DialogFragment {
 
                         alertDialog.dismiss();
                     } else {
-                        Toast.makeText(getActivity(), "Room title Cannot be blank!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.dialog_room_title_blank), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

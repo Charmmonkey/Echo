@@ -31,6 +31,7 @@ public class LobbyActivity extends AppCompatActivity {
     public static final String ACTION_EXISTING_USER = "com.stream.jerye.queue.ACTION_EXISTING_USER";
     public static final String ACTION_NEW_USER = "com.stream.jerye.queue.ACTION_NEW_USER";
     private AnimatedVectorDrawable returnToJoin;
+    private static boolean loggedInFlag = false;
 
 
     private static final int REQUEST_CODE = 42;
@@ -76,7 +77,7 @@ public class LobbyActivity extends AppCompatActivity {
                 if (!mToken.equals("")) {
                     new CreateRoomDiaglog().show(getFragmentManager(), "CreateRoomDialog");
                 } else {
-                    Toast.makeText(LobbyActivity.this, "Please Log In First!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LobbyActivity.this, getString(R.string.lobby_login_first_message), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -94,9 +95,28 @@ public class LobbyActivity extends AppCompatActivity {
                         new JoinRoomDialog().show(getFragmentManager(), "JoinRoomDialog");
                     }
                 } else {
-                    Toast.makeText(LobbyActivity.this, "Please Log In First!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LobbyActivity.this, getString(R.string.lobby_login_first_message), Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });
+
+        mClearRoomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!mToken.equals("")) {
+                    mUserDatabaseAccess.removeUser();
+                    PreferenceUtility.deleteRoomPreference();
+                    PreferenceUtility.deleteUserPreference(); //Since room preference is deleted, next user key will be different
+                    mJoinRoomButton.setImageDrawable(returnToJoin);
+                    returnToJoin.start();
+                    mJoinWord.setVisibility(View.VISIBLE);
+                    mReturnWord.setVisibility(View.INVISIBLE);
+                    mExitWord.setVisibility(View.GONE);
+                    mClearRoomButton.setVisibility(View.GONE);
+                } else {
+                    Toast.makeText(LobbyActivity.this, getString(R.string.lobby_login_first_message), Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -142,34 +162,23 @@ public class LobbyActivity extends AppCompatActivity {
 
     }
 
-    public void clearRoomPreference(View v) {
-        mUserDatabaseAccess.removeUser();
-        PreferenceUtility.deleteRoomPreference();
-        PreferenceUtility.deleteUserPreference(); //Since room preference is deleted, next user key will be different
-        mJoinRoomButton.setImageDrawable(returnToJoin);
-        returnToJoin.start();
-        mJoinWord.setVisibility(View.VISIBLE);
-        mReturnWord.setVisibility(View.INVISIBLE);
-        mExitWord.setVisibility(View.GONE);
-        mClearRoomButton.setVisibility(View.GONE);
-
-    }
-
     public void layoutLoggedOut() {
+        loggedInFlag = false;
         checkRoomPreference();
+
+        mCreateRoomButton.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        mJoinRoomButton.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        mClearRoomButton.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark));
 
         mCreateWord.setVisibility(View.INVISIBLE);
         mExitWord.setVisibility(View.INVISIBLE);
         mReturnWord.setVisibility(View.INVISIBLE);
         mJoinWord.setVisibility(View.INVISIBLE);
 
-
-        mCreateRoomButton.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-        mJoinRoomButton.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-        mClearRoomButton.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark));
     }
 
     public void layoutLoggedIn() {
+        loggedInFlag = true;
         checkRoomPreference();
 
         mCreateWord.setVisibility(View.VISIBLE);
@@ -186,20 +195,25 @@ public class LobbyActivity extends AppCompatActivity {
         mLoginButton.setText(getResources().getString(R.string.lobby_loggedin));
         mLoginButton.setAllCaps(true);
 
+
     }
 
     public void checkRoomPreference() {
         roomKey = PreferenceUtility.getPreference(PreferenceUtility.ROOM_KEY);
         if (!roomKey.equals("")) {
             mJoinRoomButton.setImageDrawable(getDrawable(R.drawable.rejoin_room_icon));
-            mJoinWord.setVisibility(View.INVISIBLE);
-            mReturnWord.setVisibility(View.VISIBLE);
-            mExitWord.setVisibility(View.VISIBLE);
             mClearRoomButton.setVisibility(View.VISIBLE);
+            mJoinWord.setVisibility(View.INVISIBLE);
+
+            if(loggedInFlag){
+                mReturnWord.setVisibility(View.VISIBLE);
+                mExitWord.setVisibility(View.VISIBLE);
+            }
+
 
         } else {
             mJoinRoomButton.setImageDrawable(getDrawable(R.drawable.join_room_icon));
-            mReturnWord.setVisibility(View.GONE);
+            mReturnWord.setVisibility(View.INVISIBLE);
             mExitWord.setVisibility(View.INVISIBLE);
             mClearRoomButton.setVisibility(View.GONE);
         }

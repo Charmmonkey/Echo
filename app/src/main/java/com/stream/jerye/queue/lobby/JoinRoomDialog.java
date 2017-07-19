@@ -15,10 +15,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.PreferenceUtility;
+import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
 import com.stream.jerye.queue.room.RoomActivity;
+import com.stream.jerye.queue.widget.QueueWidgetProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +104,7 @@ public class JoinRoomDialog extends DialogFragment implements FirebaseEventBus.F
                     if(!roomTitleEditText.getText().toString().equals("")){
                         mTitleAttempt = roomTitleEditText.getText().toString();
                     }else{
-                        Toast.makeText(getActivity(), "Title can't be blank!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.dialog_room_title_blank), Toast.LENGTH_SHORT).show();
                     }
                     mPasswordAttempt = roomPasswordEditText.getText().toString();
 
@@ -120,13 +121,16 @@ public class JoinRoomDialog extends DialogFragment implements FirebaseEventBus.F
                             startActivity(intent);
                             alertDialog.dismiss();
                             enteredRoomFlag = true;
+
+                            Intent widgetIntent = new Intent(QueueWidgetProvider.ACTION_WIDGET_CONNECTION);
+                            getActivity().sendBroadcast(widgetIntent);
                             break;
                         }
 
                     }
 
                     if(!enteredRoomFlag){
-                        Toast.makeText(getActivity(), "Incorrect Room & Password\nPlease Try Again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.dialog_incorrect_room_pass), Toast.LENGTH_SHORT).show();
 
                     }
                 }

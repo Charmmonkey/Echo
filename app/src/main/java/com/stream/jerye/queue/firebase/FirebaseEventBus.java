@@ -54,6 +54,7 @@ public class FirebaseEventBus {
         private FirebaseQueueAdapterHandler mFirebaseQueueAdapterHandler;
         private Context mContext;
         private SharedPreferences prefs;
+        private ChildEventListener widgetChildEventListener, musicChildEventListener;
         public static final String ACTION_DATA_UPDATED = "com.stream.jerye.queue.firebase.ACTION_DATA_UPDATED";
 
         public MusicDatabaseAccess(Context context, FirebasePeekHandler firebasePeekHandler) {
@@ -121,7 +122,7 @@ public class FirebaseEventBus {
         // Different from childEventListener because we don't want duplicate Broadcasts from app and widget.
         public void addWidgetUpdater() {
             if (mMusicDatabaseReference != null) {
-                mMusicDatabaseReference.addChildEventListener(new ChildEventListener() {
+                widgetChildEventListener = new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         SimpleTrack simpleTrack = dataSnapshot.getValue(SimpleTrack.class);
@@ -150,8 +151,14 @@ public class FirebaseEventBus {
                     public void onCancelled(DatabaseError databaseError) {
 
                     }
-                });
+                };
+                mMusicDatabaseReference.addChildEventListener(widgetChildEventListener
+                );
             }
+        }
+
+        public void removeWidgetUpdater() {
+            mMusicDatabaseReference.removeEventListener(widgetChildEventListener);
         }
 
         public void push(SimpleTrack simpleTrack) {

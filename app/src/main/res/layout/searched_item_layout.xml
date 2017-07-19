@@ -8,12 +8,12 @@
     android:orientation="horizontal">
 
     <ImageView
+        android:contentDescription="@string/music_searched_album"
         android:id="@+id/entity_image"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginEnd="8dp"
-        tools:src="@drawable/album_sample"
-        android:layout_marginRight="8dp"/>
+        tools:src="@drawable/album_sample"/>
 
     <LinearLayout
         android:layout_width="match_parent"

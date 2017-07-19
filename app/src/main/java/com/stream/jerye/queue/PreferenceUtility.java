@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 
 public class PreferenceUtility {
     private static SharedPreferences prefs;
+    public static final String FIREBASE_REGISTRATION_TOKEN = "registration token";
     public static final String SPOTIFY_TOKEN = "token";
     public static final String ROOM_KEY = "room key";
     public static final String ROOM_TITLE = "room title";
@@ -52,6 +53,8 @@ public class PreferenceUtility {
             case USER_KEY:
                 prefs.edit().putString(USER_KEY,value[0]).apply();
                 break;
+            case FIREBASE_REGISTRATION_TOKEN:
+                prefs.edit().putString(FIREBASE_REGISTRATION_TOKEN,value[0]).apply();
             default:
                 break;
 

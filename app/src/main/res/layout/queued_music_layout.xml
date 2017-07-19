@@ -18,7 +18,7 @@
             android:id="@+id/queued_music_album_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:contentDescription=""
+            android:contentDescription="@string/music_playlist_album"
             tools:src="@drawable/album_sample" />
 
         <LinearLayout

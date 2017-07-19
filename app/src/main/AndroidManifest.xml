@@ -34,6 +34,7 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="com.stream.jerye.queue.firebase.ACTION_DATA_UPDATED"/>
+                <action android:name="com.stream.jerye.queue.firebase.ACTION_WIDGET_CONNECTION"/>
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"

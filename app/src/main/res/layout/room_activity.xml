@@ -35,6 +35,7 @@
                     android:layout_height="wrap_content"
                     android:onClick="openProfileDrawer"
                     android:padding="16dp"
+                    android:contentDescription="@string/room_profile"
                     android:src="@drawable/menu_icon" />
 
                 <TextView
@@ -44,6 +45,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingEnd="16dp"
+                    android:paddingStart="0dp"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     tools:text="Test Room Title" />
@@ -54,6 +56,7 @@
                     android:layout_height="wrap_content"
                     android:onClick="viewPagerSwipe"
                     android:padding="16dp"
+                    android:contentDescription="@string/room_swipe"
                     android:src="@drawable/chat_icon" />
             </LinearLayout>
 
@@ -78,7 +81,7 @@
                 android:id="@+id/music_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0:00" />
+                android:text="@string/room_start_time" />
 
             <SeekBar
                 android:id="@+id/music_seekbar"
@@ -91,7 +94,7 @@
                 android:id="@+id/music_duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0:00"
+                android:text="@string/room_start_time"
                 android:textColor="@color/gray_accent" />
         </LinearLayout>
 
@@ -109,6 +112,7 @@
             android:weightSum="1">
 
             <ImageView
+                android:contentDescription="@string/room_previous"
                 android:id="@+id/previous_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -121,6 +125,7 @@
             <ImageView
                 android:id="@+id/current_album_image"
                 android:layout_width="40dp"
+                android:contentDescription="@string/music_current_album"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical" />
 
@@ -145,7 +150,6 @@
                     android:id="@+id/music_current_artist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/music_current_title"
                     android:textSize="12sp"
                     tools:text="Artist" />
 
@@ -157,13 +161,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:contentDescription="current album image"
+                android:contentDescription="@string/room_play_button"
                 android:scaleType="center"
                 android:layout_marginEnd="20dp"
                 android:src="@drawable/ic_play" />
 
 
             <ImageView
+                android:contentDescription="@string/room_next"
                 android:id="@+id/next_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -218,12 +223,14 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:contentDescription="@string/profile_member_thumbnail"
                 android:id="@+id/profile_picture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp" />
 
             <ImageView
+                android:contentDescription="@string/profile_spotify"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:padding="8dp"

@@ -7,6 +7,7 @@
     tools:context="com.stream.jerye.queue.lobby.LobbyActivity">
 
     <ImageView
+        android:contentDescription="@string/lobby_center"
         android:id="@+id/lobby_center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,6 +33,7 @@
 
 
     <ImageView
+        android:contentDescription="@string/lobby_create"
         android:id="@+id/lobby_create_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -53,6 +55,7 @@
         android:textSize="16sp" />
 
     <ImageView
+        android:contentDescription="@string/lobby_join"
         android:id="@+id/lobby_join_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -103,12 +106,12 @@
         android:textSize="16sp" />
 
     <ImageView
+        android:contentDescription="@string/lobby_clear"
         android:id="@+id/lobby_clear_button"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_alignTop="@id/exit_word"
         android:layout_toStartOf="@id/exit_word"
-        android:onClick="clearRoomPreference"
         android:visibility="invisible"
         android:layout_margin="6dp"
         android:src="@drawable/close_icon" />

@@ -1,8 +1,6 @@
 package com.stream.jerye.queue.room.musicPage;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.stream.jerye.queue.PreferenceUtility;
 import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
 
@@ -119,7 +118,7 @@ public class MusicFragment extends Fragment implements Search.View,
 
             @Override
             public boolean onQueryTextChange(final String newText) {
-                if(isTyping){
+                if (isTyping) {
                     mMusicResultsList.setVisibility(View.VISIBLE);
                     isTyping = false;
                 }
@@ -151,7 +150,7 @@ public class MusicFragment extends Fragment implements Search.View,
                 mMusicResultsList.setVisibility(View.GONE);
                 mMusicDatabaseAccess.push(simpleTrack);
                 mSearchView.setQuery("", false);
-                mSearchContainer.setBackground(ContextCompat.getDrawable(getContext(),R.color.transparent));
+                mSearchContainer.setBackground(ContextCompat.getDrawable(getContext(), R.color.transparent));
                 mSearchResultsAdapter.clearData();
                 isTyping = true;
             }
@@ -175,8 +174,8 @@ public class MusicFragment extends Fragment implements Search.View,
         super.onCreate(savedInstanceState);
         Log.d(TAG, "music frag create");
 
-        SharedPreferences prefs = getContext().getSharedPreferences(getContext().getPackageName(), Context.MODE_PRIVATE);
-        mSpotifyAccessToken = prefs.getString("token", "");
+        PreferenceUtility.initialize(getContext());
+        mSpotifyAccessToken = PreferenceUtility.getPreference(PreferenceUtility.SPOTIFY_TOKEN);
 
         mMusicDatabaseAccess = new FirebaseEventBus.MusicDatabaseAccess(getContext(), this);
         mMusicDatabaseAccess.addChildListener();

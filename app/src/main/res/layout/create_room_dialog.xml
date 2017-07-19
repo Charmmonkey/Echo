@@ -22,7 +22,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
-        android:hint="room name"
+        android:hint="@string/dialog_name"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -34,7 +34,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="4dp"
         android:fontFamily="sans-serif"
-        android:hint="password"
+        android:hint="@string/dialog_password"
         android:inputType="textPassword" />
 
 </LinearLayout>

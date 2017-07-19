@@ -2,14 +2,13 @@
     <string name="app_name">Echo</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dialog_cancel">cancel</string>
     <string name="dialog_create">create</string>
     <string name="dialog_join">join</string>
-
-    <string name="skip_previous">skip to previous track</string>
-    <string name="skip_next">skip to next track</string>
-    <string name="current_album_image">current album image</string>
+    <string name="dialog_name">room name</string>
+    <string name="dialog_password">room password</string>
+    <string name="dialog_room_title_blank">Room title cannot be blank!</string>
+    <string name="dialog_incorrect_room_pass">Incorrect Room &amp; Password\nPlease Try Again</string>
 
     <string name="profile_members">members</string>
     <string name="profile_account">account</string>
@@ -17,6 +16,7 @@
 
     <string name="widget_name">Echo Playlist</string>
 
+    <string name="lobby_login_first_message">Please log in first!</string>
     <string name="lobby_join">join room</string>
     <string name="lobby_create">create room</string>
     <string name="lobby_join_short">join</string>
@@ -25,4 +25,24 @@
     <string name="lobby_create_short">create</string>
     <string name="lobby_login">log in</string>
     <string name="lobby_loggedin">logged in</string>
+    <string name="lobby_center">activity center mark</string>
+    <string name="lobby_clear">clear room preference</string>
+
+    <string name="room_start_time">0:00</string>
+    <string name="room_play_button">play or pause</string>
+    <string name="room_next">skip next</string>
+    <string name="room_previous">skip previous</string>
+    <string name="room_swipe">swipe page</string>
+    <string name="room_profile">room profile</string>
+
+    <string name="profile_picture">account thumbnail</string>
+    <string name="profile_spotify">spotify logo</string>
+    <string name="profile_member_thumbnail">room member thumbnail</string>
+
+    <string name="music_current_album">current album</string>
+    <string name="music_playlist_album">playlist album</string>
+    <string name="music_searched_album">searched album</string>
+
+    <string name="chat_send">send</string>
+
 </resources>

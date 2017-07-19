@@ -11,13 +11,13 @@ import android.widget.RemoteViews;
 
 import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.room.RoomActivity;
-import com.stream.jerye.queue.firebase.FirebaseEventBus;
 
 /**
  * Created by jerye on 6/30/2017.
  */
 
 public class QueueWidgetProvider extends AppWidgetProvider {
+    public static final String ACTION_WIDGET_CONNECTION = "com.stream.jerye.queue.firebase.ACTION_WIDGET_CONNECTION";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -48,10 +48,7 @@ public class QueueWidgetProvider extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         Log.d("Widget", "onReceive");
-        if (FirebaseEventBus.MusicDatabaseAccess.ACTION_DATA_UPDATED.equals(intent.getAction())) {
-            Log.d("Widget", "action data update");
-//            context.startService(new Intent(context, QueueWidgetRemoteService.class));
-        }
+
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(
                 new ComponentName(context, getClass()));
