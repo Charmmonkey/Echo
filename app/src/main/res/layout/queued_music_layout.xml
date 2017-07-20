@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
+            android:textDirection="locale"
             android:orientation="vertical">
 
             <TextView
@@ -55,7 +56,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                tools:text="by Artist" />
+                tools:text="by Artist"
+                android:duplicateParentState="true"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:maxLines="1">
+                <requestFocus
+                    android:duplicateParentState="true"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" />
+            </TextView>
+
+
         </LinearLayout>
 
     </LinearLayout>

@@ -23,7 +23,7 @@ public class MusicQueueAdapter extends RecyclerView.Adapter<MusicQueueAdapter.Mu
     private List<SimpleTrack> mItems = new ArrayList<>();
     private Context mContext;
     private String singleTitle, singleArtist, singleAlbumImage;
-    private int noAlbumImageId = R.drawable.ic_pause;
+    private int noAlbumImageId = R.drawable.pause_icon;
     private String TAG = "MusicQueueAdapter";
     private MusicPlaylistClickHandler mMusicPlaylistHandler;
 
@@ -73,7 +73,7 @@ public class MusicQueueAdapter extends RecyclerView.Adapter<MusicQueueAdapter.Mu
         holder.artist.setText(singleArtist);
 
         if (singleAlbumImage.equals("")) {
-            Picasso.with(mContext).load(R.drawable.ic_pause).into(holder.albumImage);
+            Picasso.with(mContext).load(R.drawable.pause_icon).into(holder.albumImage);
 
         } else {
             Picasso.with(mContext).load(singleAlbumImage).into(holder.albumImage);

@@ -19,6 +19,7 @@
         android:background="@color/gray_accent" />
 
     <LinearLayout
+        android:layoutDirection="ltr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -31,7 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             style="@style/edit_text_style"
-            android:nextFocusRight="@id/send_button"
+            android:focusable="true"
+            android:nextFocusRight="@+id/send_button"
             android:background="@drawable/edit_textbox_bubble"/>
 
         <ImageView

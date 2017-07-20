@@ -4,11 +4,7 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.graphics.Bitmap;
 import android.graphics.drawable.AnimatedVectorDrawable;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.Fragment;
@@ -31,7 +27,6 @@ import android.widget.Toolbar;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.stream.jerye.queue.PreferenceUtility;
 import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.firebase.FirebaseEventBus;
@@ -240,9 +235,15 @@ public class RoomActivity extends AppCompatActivity implements
 
     @Override
     public void createProfile(UserPrivate userPrivate) {
-        String profileName = userPrivate.display_name;
-        String profilePicture = userPrivate.images.get(0).url;
+        String profileName = userPrivate.display_name==null ? "Anonymous" : userPrivate.display_name;
         String profileId = userPrivate.id;
+        String profilePicture;
+        try {
+            profilePicture = userPrivate.images.get(0).url;
+        } catch (IndexOutOfBoundsException e) {
+            profilePicture = "";
+        }
+
 
         String[] profile = {profileName, profilePicture, profileId};
 
@@ -250,29 +251,12 @@ public class RoomActivity extends AppCompatActivity implements
 
         mProfileName.setText(profileName);
 
-        Target target = new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                Log.d("Profile", "bitmap target");
+        if(!profilePicture.equals("")){
+            Picasso.with(this).load(profilePicture).into(mProfilePicture);
+        }else{
+            mProfilePicture.setImageDrawable(getDrawable(R.drawable.default_profile_icon));
 
-                BitmapDrawable drawable = new BitmapDrawable(getResources(), bitmap);
-                Drawable bubble = getDrawable(R.drawable.user_picture_bubble);
-                Drawable[] drawables = {drawable, bubble};
-                LayerDrawable layer = new LayerDrawable(drawables);
-                mProfilePicture.setImageDrawable(layer);
-                Log.d("Profile", "loaded circle");
-            }
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-
-            }
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-            }
-        };
-        mProfilePicture.setTag(target);
-        Picasso.with(this).load(profilePicture).into(target);
+        }
 
         // Check if user is unique first
         if (LobbyActivity.ACTION_NEW_USER.equals(intentAction)) {

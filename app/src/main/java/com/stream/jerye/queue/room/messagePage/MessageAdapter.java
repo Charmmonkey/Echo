@@ -1,8 +1,6 @@
 package com.stream.jerye.queue.room.messagePage;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -12,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.stream.jerye.queue.PreferenceUtility;
 import com.stream.jerye.queue.R;
 
 import java.util.List;
@@ -24,15 +23,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
 
     private Context mContext;
     private List<Message> mMessageList;
-    private SharedPreferences mPrefs;
-    private LinearLayout.LayoutParams params, paramsSystems;
+    private LinearLayout.LayoutParams paramsMe, paramsSystems, paramsYou;
+    private String meName;
 
     public MessageAdapter(Context context, List<Message> list) {
         mContext = context;
         mMessageList = list;
-        mPrefs = mContext.getSharedPreferences(mContext.getPackageName(), Context.MODE_PRIVATE);
-        params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.END;
+        PreferenceUtility.initialize(mContext);
+        meName = PreferenceUtility.getPreference(PreferenceUtility.PROFILE_NAME);
+
+        paramsYou = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        paramsMe = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        paramsMe.gravity = Gravity.END;
         paramsSystems = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         paramsSystems.gravity = Gravity.CENTER;
     }
@@ -48,16 +50,23 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
         holder.messageContent.setText(mMessageList.get(position).getText());
         holder.messageName.setText(name);
 
-        if(mPrefs.getString("profile name", "").equals(name)){
-            holder.messageName.setLayoutParams(params);
-            holder.messageContent.setTextColor(Color.WHITE);
-            holder.messageContent.setLayoutParams(params);
+        if (meName.equals(name)) {
+            holder.messageName.setVisibility(View.VISIBLE);
+            holder.messageName.setLayoutParams(paramsMe);
+            holder.messageContent.setTextColor(ContextCompat.getColor(mContext, R.color.white));
+            holder.messageContent.setLayoutParams(paramsMe);
             holder.messageContent.setBackground(ContextCompat.getDrawable(mContext, R.drawable.message_bubble_me));
-        }else if(name.equals("SYSTEM ANNOUNCEMENT") ){
+        } else if (name.equals("SYSTEM ANNOUNCEMENT")) {
             holder.messageName.setVisibility(View.GONE);
-            holder.messageContent.setTextColor(ContextCompat.getColor(mContext,R.color.colorPrimaryDark));
+            holder.messageContent.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
             holder.messageContent.setLayoutParams(paramsSystems);
-            holder.messageContent.setBackgroundColor(ContextCompat.getColor(mContext,R.color.transparent));
+            holder.messageContent.setBackgroundColor(ContextCompat.getColor(mContext, R.color.transparent));
+        } else {
+            holder.messageName.setLayoutParams(paramsYou);
+            holder.messageName.setVisibility(View.VISIBLE);
+            holder.messageContent.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
+            holder.messageContent.setLayoutParams(paramsYou);
+            holder.messageContent.setBackground(ContextCompat.getDrawable(mContext, R.drawable.message_bubble_you));
         }
     }
 

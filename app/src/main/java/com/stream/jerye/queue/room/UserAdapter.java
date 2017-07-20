@@ -1,10 +1,7 @@
 package com.stream.jerye.queue.room;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.lobby.User;
 
@@ -65,36 +61,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     @Override
     public void onBindViewHolder(final UserViewHolder holder, int position) {
+        String picturePath;
+        if(mUserList.get(position).getPicture() == null || mUserList.get(position).getPicture().equals("")){
+            holder.userProfilePicture.setImageDrawable(mContext.getDrawable(R.drawable.default_profile_icon));
+        }else{
+            Picasso.with(mContext).load(mUserList.get(position).getPicture()).into(holder.userProfilePicture);
 
-        Target target = new Target() {
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                Log.d("Profile", "bitmap target");
+        }
 
-                userPictureDrawable = new BitmapDrawable(mContext.getResources(), bitmap);
-                Drawable bubble = mContext.getDrawable(R.drawable.user_picture_bubble);
-                Drawable[] drawables = {userPictureDrawable, bubble};
-                LayerDrawable layer = new LayerDrawable(drawables);
-                holder.userProfilePicture.setImageDrawable(layer);
-                Log.d("Profile", "loaded circle");
-
-
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
-                Log.d("Profile", "failed: " + errorDrawable);
-
-            }
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {
-                Log.d("Profile", "failed: " + "preparing load");
-
-            }
-        };
-        holder.userProfilePicture.setTag(target);
-        Picasso.with(mContext).load(mUserList.get(position).getPicture()).into(target);
         Log.d("Profile", mUserList.get(position).getPicture());
 
         holder.userName.setText(mUserList.get(position).getName());

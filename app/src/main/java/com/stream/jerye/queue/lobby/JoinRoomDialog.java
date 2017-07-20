@@ -114,6 +114,9 @@ public class JoinRoomDialog extends DialogFragment implements FirebaseEventBus.F
                             PreferenceUtility.setPreference(PreferenceUtility.ROOM_KEY,room.getRoomKey());
                             Log.d("Dialog", "room key: " + room.getRoomKey());
 
+                            PreferenceUtility.setPreference(PreferenceUtility.ROOM_TITLE, mTitleAttempt);
+                            PreferenceUtility.setPreference(PreferenceUtility.ROOM_PASSWORD, mPasswordAttempt);
+
                             Intent intent = new Intent(getActivity(), RoomActivity.class)
                                     .setAction(LobbyActivity.ACTION_NEW_USER)
                                     .putExtra("room title", mTitleAttempt)

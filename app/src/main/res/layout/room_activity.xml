@@ -34,8 +34,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/room_profile"
-                    android:nextFocusDown="@id/previous_button"
-                    android:nextFocusRight="@id/room_toolbar_page_icon"
+                    android:nextFocusDown="@+id/previous_button"
+                    android:nextFocusRight="@+id/room_toolbar_page_icon"
                     android:onClick="openProfileDrawer"
                     android:padding="16dp"
                     android:src="@drawable/menu_icon" />
@@ -45,6 +45,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textDirection="locale"
                     android:gravity="center_vertical"
                     android:paddingEnd="16dp"
                     android:paddingStart="0dp"
@@ -57,8 +58,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/room_swipe"
-                    android:nextFocusLeft="@id/room_toolbar_profile"
-                    android:nextFocusDown="@id/next_button"
+                    android:nextFocusDown="@+id/next_button"
+                    android:nextFocusLeft="@+id/room_toolbar_profile"
                     android:onClick="viewPagerSwipe"
                     android:padding="16dp"
                     android:src="@drawable/chat_icon" />
@@ -73,6 +74,7 @@
             android:layout_weight="1" />
 
         <LinearLayout
+            android:layoutDirection="ltr"
             style="@style/music_bar_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,6 +87,8 @@
                 android:id="@+id/music_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="14dp"
                 android:text="@string/room_start_time" />
 
             <SeekBar
@@ -99,6 +103,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/room_start_time"
+                android:textSize="14dp"
+                android:layout_gravity="center_vertical"
                 android:textColor="@color/gray_accent" />
         </LinearLayout>
 
@@ -108,6 +114,7 @@
             android:background="@color/background_light" />
 
         <LinearLayout
+            android:layoutDirection="ltr"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
@@ -116,6 +123,7 @@
             android:weightSum="1">
 
             <ImageView
+
                 android:id="@+id/previous_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -135,6 +143,8 @@
 
             <LinearLayout
                 android:layout_width="0dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
@@ -147,15 +157,41 @@
                     android:id="@+id/music_current_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    tools:text="current song" />
+                    android:duplicateParentState="true"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:textSize="16dp"
+                    tools:text="current song">
+
+                    <requestFocus
+                        android:duplicateParentState="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true" />
+                </TextView>
 
                 <TextView
                     android:id="@+id/music_current_artist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    tools:text="Artist" />
+                    android:duplicateParentState="true"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:textSize="12dp"
+                    tools:text="Artist">
+
+                    <requestFocus
+                        android:duplicateParentState="true"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true" />
+                </TextView>
 
 
             </LinearLayout>
@@ -167,10 +203,10 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="20dp"
                 android:contentDescription="@string/room_play_button"
-                android:nextFocusLeft="@id/previous_button"
-                android:nextFocusRight="@id/next_button"
+                android:nextFocusLeft="@+id/previous_button"
+                android:nextFocusRight="@+id/next_button"
                 android:scaleType="center"
-                android:src="@drawable/ic_play" />
+                android:src="@drawable/play_icon" />
 
 
             <ImageView
@@ -179,8 +215,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:contentDescription="@string/room_next"
-                android:nextFocusUp="@id/room_toolbar_page_icon"
                 android:nextFocusLeft="@id/play_button"
+                android:nextFocusUp="@id/room_toolbar_page_icon"
                 android:onClick="playNext"
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
@@ -230,10 +266,10 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_picture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:contentDescription="@string/profile_member_thumbnail"
                 android:padding="8dp" />
 

@@ -166,9 +166,9 @@ public class LobbyActivity extends AppCompatActivity {
         loggedInFlag = false;
         checkRoomPreference();
 
-        mCreateRoomButton.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-        mJoinRoomButton.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark));
-        mClearRoomButton.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+        mCreateRoomButton.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary));
+        mJoinRoomButton.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary));
+        mClearRoomButton.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary));
 
         mCreateWord.setVisibility(View.INVISIBLE);
         mExitWord.setVisibility(View.INVISIBLE);

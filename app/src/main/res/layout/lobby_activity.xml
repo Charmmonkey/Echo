@@ -6,18 +6,25 @@
     android:layout_height="match_parent"
     tools:context="com.stream.jerye.queue.lobby.LobbyActivity">
 
+
     <ImageView
-        android:contentDescription="@string/lobby_center"
         android:id="@+id/lobby_center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/echo_icon" />
+        android:contentDescription="@string/lobby_center"
 
+        android:src="@drawable/center_icon" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:background="@color/widget_primary"/>
     <View
         android:id="@+id/lobby_divider_up"
         android:layout_width="2dp"
-        android:layout_height="30dp"
+        android:layout_height="28dp"
         android:layout_above="@id/lobby_center"
         android:layout_centerHorizontal="true"
         android:background="@drawable/background_fade_up" />
@@ -26,21 +33,51 @@
     <View
         android:id="@+id/lobby_divider_down"
         android:layout_width="2dp"
-        android:layout_height="30dp"
+        android:layout_height="28dp"
         android:layout_below="@id/lobby_center"
         android:layout_centerHorizontal="true"
         android:background="@drawable/background_fade_down" />
 
+    <LinearLayout
+        android:id="@+id/title_line"
+        android:background="@drawable/background_fade_down"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+android:padding="60dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <View
+            style="@style/app_title_style"
+            android:background="@drawable/echo_e" />
+
+        <View
+            style="@style/app_title_style"
+            android:background="@drawable/echo_c" />
+
+        <View
+            style="@style/app_title_style"
+            android:background="@drawable/echo_h" />
+
+        <View
+            style="@style/app_title_style"
+            android:background="@drawable/echo_o" />
+
+
+    </LinearLayout>
+
+
 
     <ImageView
-        android:contentDescription="@string/lobby_create"
         android:id="@+id/lobby_create_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:nextFocusDown="@id/lobby_login_button"
-        android:nextFocusRight="@id/lobby_join_button"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@id/lobby_center"
+        android:contentDescription="@string/lobby_create"
+        android:nextFocusDown="@+id/lobby_login_button"
+        android:nextFocusRight="@+id/lobby_join_button"
         android:src="@drawable/add_icon" />
 
     <TextView
@@ -53,18 +90,18 @@
         android:paddingStart="8dp"
         android:text="@string/lobby_create_short"
         android:textAllCaps="true"
-        android:visibility="invisible"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="invisible" />
 
     <ImageView
-        android:contentDescription="@string/lobby_join"
-        android:nextFocusDown="@id/lobby_clear_button"
         android:id="@+id/lobby_join_button"
-        android:nextFocusLeft="@id/lobby_create_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/lobby_center"
+        android:contentDescription="@string/lobby_join"
+        android:nextFocusDown="@+id/lobby_clear_button"
+        android:nextFocusLeft="@id/lobby_create_button"
         android:src="@drawable/join_room_icon" />
 
     <TextView
@@ -75,23 +112,24 @@
         android:layout_toEndOf="@id/lobby_join_button"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
-        android:visibility="invisible"
         android:text="@string/lobby_return"
         android:textAllCaps="true"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/join_word"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_centerVertical="true"
+        android:gravity="center_vertical"
         android:layout_toEndOf="@id/lobby_join_button"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
-        android:visibility="invisible"
         android:text="@string/lobby_join_short"
         android:textAllCaps="true"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="invisible" />
 
 
     <TextView
@@ -100,28 +138,28 @@
         android:layout_height="40dp"
         android:layout_alignStart="@id/return_word"
         android:layout_below="@id/return_word"
+        android:layout_marginTop="40dp"
         android:gravity="center_vertical"
         android:paddingEnd="8dp"
         android:paddingStart="8dp"
         android:text="@string/lobby_exit"
         android:textAllCaps="true"
-        android:layout_marginTop="8dp"
-        android:visibility="invisible"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="invisible" />
 
     <ImageView
-        android:contentDescription="@string/lobby_clear"
         android:id="@+id/lobby_clear_button"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_alignTop="@id/exit_word"
-        android:layout_toStartOf="@id/exit_word"
-        android:visibility="invisible"
-        android:nextFocusUp="@id/lobby_join_button"
-        android:nextFocusDown="@id/lobby_login_button"
-        android:nextFocusLeft="@id/lobby_create_button"
         android:layout_margin="6dp"
-        android:src="@drawable/close_icon" />
+        android:layout_toStartOf="@id/exit_word"
+        android:contentDescription="@string/lobby_clear"
+        android:nextFocusDown="@+id/lobby_login_button"
+        android:nextFocusLeft="@+id/lobby_create_button"
+        android:nextFocusUp="@id/lobby_join_button"
+        android:src="@drawable/close_icon"
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/lobby_login_button"
@@ -133,8 +171,8 @@
         android:drawablePadding="8dp"
         android:drawableTop="@drawable/profile_icon"
         android:gravity="center"
-        android:onClick="loginButton"
         android:nextFocusUp="@id/lobby_clear_button"
+        android:onClick="loginButton"
         android:padding="50dp"
         android:text="@string/lobby_login"
         android:textAllCaps="true"
