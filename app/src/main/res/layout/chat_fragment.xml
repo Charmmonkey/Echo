@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="6"
             style="@style/edit_text_style"
+            android:nextFocusRight="@id/send_button"
             android:background="@drawable/edit_textbox_bubble"/>
 
         <ImageView
@@ -40,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
+            android:nextFocusLeft="@id/edit_textbox"
             android:src="@drawable/send_icon" />
 
     </LinearLayout>

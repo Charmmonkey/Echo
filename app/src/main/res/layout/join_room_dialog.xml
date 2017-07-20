@@ -23,6 +23,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
+        android:nextFocusDown="@id/room_password"
         android:hint="@string/dialog_name"
         android:inputType="textEmailAddress" />
 
@@ -33,6 +34,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:nextFocusUp="@id/room_title"
         android:layout_marginTop="4dp"
         android:fontFamily="sans-serif"
         android:hint="@string/dialog_password"

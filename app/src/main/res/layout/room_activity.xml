@@ -33,9 +33,11 @@
                     android:id="@+id/room_toolbar_profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/room_profile"
+                    android:nextFocusDown="@id/previous_button"
+                    android:nextFocusRight="@id/room_toolbar_page_icon"
                     android:onClick="openProfileDrawer"
                     android:padding="16dp"
-                    android:contentDescription="@string/room_profile"
                     android:src="@drawable/menu_icon" />
 
                 <TextView
@@ -54,9 +56,11 @@
                     android:id="@+id/room_toolbar_page_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/room_swipe"
+                    android:nextFocusLeft="@id/room_toolbar_profile"
+                    android:nextFocusDown="@id/next_button"
                     android:onClick="viewPagerSwipe"
                     android:padding="16dp"
-                    android:contentDescription="@string/room_swipe"
                     android:src="@drawable/chat_icon" />
             </LinearLayout>
 
@@ -72,9 +76,9 @@
             style="@style/music_bar_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="4dp"
             android:paddingEnd="8dp"
             android:paddingStart="8dp"
-            android:paddingBottom="4dp"
             android:paddingTop="4dp">
 
             <TextView
@@ -112,11 +116,11 @@
             android:weightSum="1">
 
             <ImageView
-                android:contentDescription="@string/room_previous"
                 android:id="@+id/previous_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
+                android:contentDescription="@string/room_previous"
                 android:onClick="playPrevious"
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
@@ -125,9 +129,9 @@
             <ImageView
                 android:id="@+id/current_album_image"
                 android:layout_width="40dp"
-                android:contentDescription="@string/music_current_album"
                 android:layout_height="40dp"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/music_current_album" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -161,18 +165,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:contentDescription="@string/room_play_button"
-                android:scaleType="center"
                 android:layout_marginEnd="20dp"
+                android:contentDescription="@string/room_play_button"
+                android:nextFocusLeft="@id/previous_button"
+                android:nextFocusRight="@id/next_button"
+                android:scaleType="center"
                 android:src="@drawable/ic_play" />
 
 
             <ImageView
-                android:contentDescription="@string/room_next"
                 android:id="@+id/next_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
+                android:contentDescription="@string/room_next"
+                android:nextFocusUp="@id/room_toolbar_page_icon"
+                android:nextFocusLeft="@id/play_button"
                 android:onClick="playNext"
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
@@ -223,16 +231,16 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:contentDescription="@string/profile_member_thumbnail"
                 android:id="@+id/profile_picture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/profile_member_thumbnail"
                 android:padding="8dp" />
 
             <ImageView
-                android:contentDescription="@string/profile_spotify"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
+                android:contentDescription="@string/profile_spotify"
                 android:padding="8dp"
                 android:src="@drawable/spotify_icon_white" />
         </LinearLayout>
