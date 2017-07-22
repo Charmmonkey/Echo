@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'echo'
             keyPassword 'udacityAND'
-            storeFile file('C:/Users/jerye/Documents/Key Store/udacityKeyStore.jks')
+            storeFile file("$rootDir/udacityKeyStore.jks")
             storePassword 'udacityAND'
         }
     }
