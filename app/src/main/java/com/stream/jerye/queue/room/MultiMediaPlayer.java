@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.ConnectionStateCallback;
@@ -14,8 +15,9 @@ import com.spotify.sdk.android.player.PlayerNotificationCallback;
 import com.spotify.sdk.android.player.PlayerState;
 import com.spotify.sdk.android.player.PlayerStateCallback;
 import com.spotify.sdk.android.player.Spotify;
-import com.stream.jerye.queue.room.musicPage.SimpleTrack;
+import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.lobby.LobbyActivity;
+import com.stream.jerye.queue.room.musicPage.SimpleTrack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +76,10 @@ public class MultiMediaPlayer implements EchoPlayer,
             mSpotifyPlayer.pause();
         }
 
-        createSpotifyAudioPlayer();
+        if (mList.size() >0 ){
+            createSpotifyAudioPlayer();
+
+        }
 
     }
 
@@ -172,10 +177,13 @@ public class MultiMediaPlayer implements EchoPlayer,
     @Override
     public void onLoggedIn() {
         Log.d(TAG, "logged in");
-        num = 0;
-        playTrack(mList.get(num));
-        mHandler = new Handler(Looper.getMainLooper());
-        mMediaObserver = new MediaObserver();
+        if(mList.size() > 0){
+            num = 0;
+            playTrack(mList.get(num));
+            mHandler = new Handler(Looper.getMainLooper());
+            mMediaObserver = new MediaObserver();
+        }
+
 
     }
 
@@ -256,6 +264,8 @@ public class MultiMediaPlayer implements EchoPlayer,
             mMusicPlayerListener.displayCurrentTrack(track);
             mMusicPlayerListener.getSongDuration((int) track.getDurationInMS());
             Log.d(TAG, "duration: " + track.getDurationInMS());
+        }else{
+            Toast.makeText(mContext, mContext.getString(R.string.music_playlist_empty_warning), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -63,7 +63,6 @@ public class QueueWidgetRemoteService extends RemoteViewsService {
 
         @Override
         public int getCount() {
-            Log.d(TAG, "get count: " + mList.size());
 
             return mList.size();
         }
@@ -80,7 +79,6 @@ public class QueueWidgetRemoteService extends RemoteViewsService {
 
         @Override
         public RemoteViews getViewAt(int position) {
-            Log.d(TAG, "getViewAt: " + position);
 
             SimpleTrack track = mList.get(position);
             String artistName = track.getArtistName();
@@ -102,14 +100,12 @@ public class QueueWidgetRemoteService extends RemoteViewsService {
 
         @Override
         public long getItemId(int position) {
-            Log.d(TAG, "getItemId: " + position);
 
             return position;
         }
 
         @Override
         public RemoteViews getLoadingView() {
-            Log.d(TAG, "getLoadingView");
 
             return new RemoteViews(getPackageName(), R.layout.widget_list_item);
         }

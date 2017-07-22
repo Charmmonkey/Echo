@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.stream.jerye.queue.R;
 import com.stream.jerye.queue.room.PlayerService;
 
 import java.util.List;
@@ -106,7 +107,7 @@ public class SearchPresenter implements Search.ActionListener {
     }
 
     private void logError(String msg) {
-        Toast.makeText(mContext, "Error: " + msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, mContext.getString(R.string.music_search_error,msg), Toast.LENGTH_SHORT).show();
         Log.e(TAG, msg);
     }
 

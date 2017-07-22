@@ -37,6 +37,8 @@ public class MusicFragment extends Fragment implements Search.View,
     private View mRootView;
     private MusicQueueAdapter mQueueMusicAdapter;
     private static final String KEY_CURRENT_QUERY = "CURRENT_QUERY";
+    private static final String KEY_SEARCHBAR_ISTYPING = "SEARCHBAR_ISTYPING";
+
     private Search.ActionListener mActionListener;
     private String TAG = "MainActivity.java";
     private String mSpotifyAccessToken;
@@ -82,6 +84,8 @@ public class MusicFragment extends Fragment implements Search.View,
     public void onClick() {
 
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -141,21 +145,6 @@ public class MusicFragment extends Fragment implements Search.View,
             }
         });
 
-        // Setup search results list
-        mSearchResultsAdapter = new SearchResultsAdapter(getContext(), new SearchResultsAdapter.ItemSelectedListener() {
-            @Override
-            public void onItemSelected(View itemView, Track item) {
-                Log.d(TAG, "result item selected");
-                SimpleTrack simpleTrack = new SimpleTrack(item);
-                mMusicResultsList.setVisibility(View.GONE);
-                mMusicDatabaseAccess.push(simpleTrack);
-                mSearchView.setQuery("", false);
-                mSearchContainer.setBackground(ContextCompat.getDrawable(getContext(), R.color.transparent));
-                mSearchResultsAdapter.clearData();
-                isTyping = true;
-            }
-        });
-
         mMusicResultsList.setHasFixedSize(true);
         mMusicResultsList.setLayoutManager(mResultsLayoutManager);
         mMusicResultsList.setAdapter(mSearchResultsAdapter);
@@ -184,8 +173,26 @@ public class MusicFragment extends Fragment implements Search.View,
         mActionListener.init(mSpotifyAccessToken);
 
         // If Activity was recreated wit active search restore it
+
+
+        // Setup search results list
+        mSearchResultsAdapter = new SearchResultsAdapter(getContext(), new SearchResultsAdapter.ItemSelectedListener() {
+            @Override
+            public void onItemSelected(View itemView, Track item) {
+                Log.d(TAG, "result item selected");
+                SimpleTrack simpleTrack = new SimpleTrack(item);
+                mMusicResultsList.setVisibility(View.GONE);
+                mMusicDatabaseAccess.push(simpleTrack);
+                mSearchView.setQuery("", false);
+                mSearchContainer.setBackground(ContextCompat.getDrawable(getContext(), R.color.transparent));
+                mSearchResultsAdapter.clearData();
+                isTyping = true;
+            }
+        });
+
         if (savedInstanceState != null) {
             String currentQuery = savedInstanceState.getString(KEY_CURRENT_QUERY);
+            isTyping = savedInstanceState.getBoolean(KEY_SEARCHBAR_ISTYPING);
             mActionListener.search(currentQuery);
         }
     }
@@ -225,6 +232,7 @@ public class MusicFragment extends Fragment implements Search.View,
         super.onSaveInstanceState(outState);
         if (mActionListener.getCurrentQuery() != null) {
             outState.putString(KEY_CURRENT_QUERY, mActionListener.getCurrentQuery());
+            outState.putBoolean(KEY_SEARCHBAR_ISTYPING, !isTyping);
         }
     }
 }

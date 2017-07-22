@@ -42,6 +42,8 @@
     <string name="music_current_album">current album</string>
     <string name="music_playlist_album">playlist album</string>
     <string name="music_searched_album">searched album</string>
+    <string name="music_playlist_empty_warning">Add some music first!</string>
+    <string name="music_search_error">Error: %s</string>
 
     <string name="chat_send">send</string>
 

@@ -191,14 +191,17 @@ public class RoomActivity extends AppCompatActivity implements
                 }
 
                 if (mPlayer.isPaused()) {
+                    Log.d(TAG, "isPaused");
                     mPlayer.resume();
                     mPlayButton.setImageDrawable(playToPause);
                     playToPause.start();
                 } else if (mPlayer.isPlaying()) {
+                    Log.d(TAG, "isPlaying");
                     mPlayer.pause();
                     mPlayButton.setImageDrawable(pauseToPlay);
                     pauseToPlay.start();
                 } else {
+                    Log.d(TAG, "else");
                     mPlayer.play();
                     mPlayButton.setImageDrawable(playToPause);
                     playToPause.start();
