@@ -47,8 +47,8 @@ public class RoomActivity extends AppCompatActivity implements
         FirebaseEventBus.FirebaseUserAdapterHandler,
         SpotifyProfileAsyncTask.SpotifyProfileCallback {
     private EchoPlayer mPlayer;
-    private String TAG = "MainActivity.java";
-    private String mToken, mRoomTitle, intentAction;
+    private String TAG = "MainActivity.java", TRACK_KEY = "track instance";
+    private String mToken, mRoomTitle, intentAction, mTrackTitle, mTrackArtist, mTrackAlbumImage;
     private AnimatedVectorDrawable playToPause, pauseToPlay;
     private FirebaseEventBus.MusicDatabaseAccess mMusicDatabaseAccess;
     private FirebaseEventBus.UserDatabaseAccess mUserDatabaseAccess;
@@ -330,17 +330,15 @@ public class RoomActivity extends AppCompatActivity implements
 
     @Override
     public void displayCurrentTrack(SimpleTrack simpleTrack) {
-        mCurrentMusicTitle.setText(simpleTrack.getName());
-        mCurrentMusicArtist.setText(simpleTrack.getArtistName());
-        Picasso.with(this).load(simpleTrack.getAlbumImage()).into(mCurrentAlbumImage);
+        mTrackTitle = simpleTrack.getName();
+        mTrackArtist = simpleTrack.getArtistName();
+        mTrackAlbumImage = simpleTrack.getAlbumImage();
+
+        mCurrentMusicTitle.setText(mTrackTitle);
+        mCurrentMusicArtist.setText(mTrackArtist);
+        Picasso.with(this).load(mTrackAlbumImage).into(mCurrentAlbumImage);
     }
 
-    //    @Override
-//    public void queueNextSong(SimpleTrack oldTrackToRemove) {
-//        Log.d(TAG, "queueNextSong called from player context end");
-//        mMusicDatabaseAccess.remove(oldTrackToRemove);
-//        mMusicDatabaseAccess.peek();
-//    }
 
     @Override
     public void enqueue(SimpleTrack simpleTrack) {
@@ -401,4 +399,22 @@ public class RoomActivity extends AppCompatActivity implements
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putStringArray(TRACK_KEY, new String[] {mTrackTitle, mTrackArtist, mTrackAlbumImage});
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if(savedInstanceState.getStringArray(TRACK_KEY) != null){
+            String[] trackInfo = savedInstanceState.getStringArray(TRACK_KEY);
+            mCurrentMusicTitle.setText(trackInfo[0]);
+            mCurrentMusicArtist.setText(trackInfo[1]);
+            Picasso.with(this).load(trackInfo[2]).into(mCurrentAlbumImage);
+        }
+
+
+    }
 }
