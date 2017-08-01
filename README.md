@@ -12,9 +12,13 @@ Listen to music, chat, and create the prefect playlist together with your friend
 
 <img src="https://user-images.githubusercontent.com/24646741/28602683-4f9720d4-7174-11e7-95b6-b63950f22132.png" alt="stock main page" width="270" height="480"> <img src="https://user-images.githubusercontent.com/24646741/28602682-4f96d4da-7174-11e7-9081-d69ade5ff2c9.png" alt="stock main page" width="270" height="480">
 
+## Latest Update
+* Fixed persistence state of current track display
+
 ## Known bugs
 * Odd search results visibility behavior on rotation while music is playing
 * Lost of users list after exiting and entering app
 * Crashes while performing some actions when network is off
+* Play button state not persistent
 * Music service behavior while exiting room/clearing preference
 * Widget update after exiting room/clearing preference
